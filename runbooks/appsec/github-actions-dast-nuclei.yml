@@ -1,0 +1,33 @@
+name: dast-nuclei
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  nuclei:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure runbook script executable
+        run: chmod +x ./runbooks/appsec/dast-nuclei-basic.sh
+
+      - name: Run Nuclei DAST runbook
+        env:
+          DAST_TARGET_URL: ${{ vars.DAST_TARGET_URL }}
+          SEC_OUTPUT_DIR: ./artifacts/security
+          DAST_REPORT_PREFIX: nuclei-report
+          DAST_FAIL_ON_FAILS: "true"
+          DAST_FAIL_ON_WARNINGS: "false"
+        run: ./runbooks/appsec/dast-nuclei-basic.sh
+
+      - name: Upload Nuclei artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuclei-results
+          path: artifacts/security/nuclei-report.jsonl

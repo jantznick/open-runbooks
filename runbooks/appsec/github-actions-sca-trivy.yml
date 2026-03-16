@@ -1,0 +1,33 @@
+name: sca-trivy
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  sca:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure runbook script executable
+        run: chmod +x ./runbooks/appsec/sca-trivy-basic.sh
+
+      - name: Run Trivy SCA runbook
+        env:
+          SCA_SCAN_PATH: ${{ vars.SCA_SCAN_PATH || '.' }}
+          SEC_OUTPUT_DIR: ./artifacts/security
+          SCA_REPORT_PREFIX: trivy-sca
+          SCA_FAIL_ON_FAILS: "true"
+          SCA_FAIL_ON_WARNINGS: "false"
+        run: ./runbooks/appsec/sca-trivy-basic.sh
+
+      - name: Upload Trivy artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-sca-results
+          path: artifacts/security/trivy-sca.json

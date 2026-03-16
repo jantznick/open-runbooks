@@ -1,0 +1,165 @@
+version: "1.0"
+title: "AppSec Policy to Evidence Mapping"
+description: "Template mapping for policy-driven evidence and governance workflows."
+
+metadata_contract:
+  required_application_fields:
+    - app_id
+    - app_name
+    - business_owner
+    - engineering_owner
+    - risk_tier
+    - data_classification
+    - internet_facing
+    - repo_url
+    - default_branch
+    - ci_provider
+  optional_application_fields:
+    - runtime_environment
+    - auth_model
+    - compliance_tags
+    - customer_data_types
+
+controls:
+  - id: AS-POL-001
+    title: Application metadata maintained
+    samm_functions: [Governance]
+    applies_when: "all_applications"
+    required_metadata:
+      - app_id
+      - business_owner
+      - engineering_owner
+      - risk_tier
+      - data_classification
+      - internet_facing
+    evidence_types:
+      - application_registry_record
+    cadence: "continuous"
+    pass_criteria: "all required metadata fields present and non-empty"
+
+  - id: AS-DES-002
+    title: Threat modeling for high-risk scope
+    samm_functions: [Design, Governance]
+    applies_when: "risk_tier in [medium, high] OR internet_facing == true"
+    required_metadata:
+      - risk_tier
+      - internet_facing
+    evidence_types:
+      - threat_model_document
+      - design_review_record
+    cadence: "per major change"
+    pass_criteria: "approved threat model exists for scoped release"
+
+  - id: AS-CI-001
+    title: SAST required in CI
+    samm_functions: [Verification]
+    applies_when: "all_applications"
+    required_metadata:
+      - ci_provider
+      - repo_url
+    evidence_types:
+      - ci_job_result:sast
+      - sast_artifact
+    cadence: "per PR and default branch build"
+    pass_criteria: "sast job executed and policy threshold met"
+
+  - id: AS-CI-002
+    title: Secrets scan required in CI
+    samm_functions: [Verification]
+    applies_when: "all_applications"
+    required_metadata:
+      - ci_provider
+    evidence_types:
+      - ci_job_result:secrets
+      - secrets_artifact
+    cadence: "per PR and default branch build"
+    pass_criteria: "secrets job executed and policy threshold met"
+
+  - id: AS-CI-003
+    title: SCA required in CI
+    samm_functions: [Verification, Implementation]
+    applies_when: "all_applications"
+    required_metadata:
+      - ci_provider
+    evidence_types:
+      - ci_job_result:sca
+      - sca_artifact
+    cadence: "per PR and default branch build"
+    pass_criteria: "sca job executed and policy threshold met"
+
+  - id: AS-CI-004
+    title: Baseline DAST for internet-facing apps
+    samm_functions: [Verification, Operations]
+    applies_when: "internet_facing == true"
+    required_metadata:
+      - internet_facing
+      - runtime_environment
+    evidence_types:
+      - ci_job_result:dast
+      - dast_artifact
+      - target_url_record
+    cadence: "pre-release and scheduled"
+    pass_criteria: "dast job executed against target URL and policy threshold met"
+
+  - id: AS-CI-005
+    title: Severity fail thresholds enforced
+    samm_functions: [Governance, Verification]
+    applies_when: "all_applications"
+    required_metadata:
+      - risk_tier
+    evidence_types:
+      - policy_threshold_config
+      - ci_enforcement_record
+      - exception_record_optional
+    cadence: "continuous"
+    pass_criteria: "build fails on configured severities unless approved exception exists"
+
+  - id: AS-REL-001
+    title: Release security evidence bundle
+    samm_functions: [Operations, Governance]
+    applies_when: "production_release"
+    required_metadata:
+      - app_id
+      - release_version
+    evidence_types:
+      - release_security_bundle
+      - artifact_links
+    cadence: "per release"
+    pass_criteria: "release record contains required security evidence links"
+
+  - id: AS-OPS-002
+    title: Findings triage and SLA tracking
+    samm_functions: [Operations, Governance]
+    applies_when: "all_findings"
+    required_metadata:
+      - risk_tier
+      - business_owner
+    evidence_types:
+      - ticket_reference
+      - sla_state
+      - closure_record
+    cadence: "continuous"
+    pass_criteria: "findings are tracked with owner, SLA, and status"
+
+  - id: AS-GOV-001
+    title: Exception governance
+    samm_functions: [Governance]
+    applies_when: "policy_exception_requested"
+    required_metadata:
+      - business_owner
+      - engineering_owner
+    evidence_types:
+      - exception_request
+      - compensating_controls
+      - approval_record
+      - expiry_date
+    cadence: "per exception and periodic review"
+    pass_criteria: "no active exception without approval, owner, and expiry"
+
+fuller_samm_coverage_gaps:
+  - "Formal organization-wide policy lifecycle ownership and annual review mechanics"
+  - "Maturity scoring by SAMM practice/stream with quarterly trend reports"
+  - "Role-based secure development training program with completion metrics"
+  - "Release-time SBOM + provenance controls integrated into standard release flow"
+  - "Runtime incident response playbooks with exercise cadence and closure loop"
+  - "Centralized evidence normalization across teams for audit readiness"

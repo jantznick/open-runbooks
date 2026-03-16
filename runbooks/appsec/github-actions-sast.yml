@@ -1,0 +1,32 @@
+name: sast-scan
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  sast:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure runbook script executable
+        run: chmod +x ./runbooks/appsec/sast-semgrep-opengrep-basic.sh
+
+      - name: Run SAST runbook
+        env:
+          SAST_SCAN_PATH: ${{ vars.SAST_SCAN_PATH || '.' }}
+          SAST_RULESET: ${{ vars.SAST_RULESET || 'p/security-audit' }}
+          SEC_OUTPUT_DIR: ./artifacts/security
+          SAST_FAIL_ON_FINDINGS: "true"
+        run: ./runbooks/appsec/sast-semgrep-opengrep-basic.sh
+
+      - name: Upload SAST artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sast-results
+          path: artifacts/security/sast-results.json
