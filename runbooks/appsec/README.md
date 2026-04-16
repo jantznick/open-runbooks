@@ -11,7 +11,7 @@ This folder is an **AppSec program template**: policy, lifecycle playbooks, OWAS
 
 ## Live demo on GitHub
 
-Fork this repository (or copy its layout), enable Actions, and follow **[demo-github-security-ci-walkthrough.md](demo-github-security-ci-walkthrough.md)**. The repo workflow [`.github/workflows/security-demo-gate.yml`](../../.github/workflows/security-demo-gate.yml) runs Semgrep, Trivy, and TruffleHog against **`test-app-vulnerable-todo`** by default; add the **`SNYK_TOKEN`** repository secret to also run Snyk Code and Snyk Open Source.
+To show scans in Actions, follow **[demo-github-security-ci-walkthrough.md](demo-github-security-ci-walkthrough.md)** — you **copy** `runbooks/appsec/` scripts and the `github-actions-*.yml` templates you want into a repo that includes **`test-app-vulnerable-todo`** (or your app), then enable Actions and secrets per **[setup-github-actions.md](setup-github-actions.md)**. This upstream project does **not** ship a mandatory workflow under `.github/workflows/`; adoption is copy-paste only.
 
 **Distributing to an operating company or product team?** Point them to **[Using these runbooks in your own repository](#using-these-runbooks-in-your-own-repository)** below (or share this whole file). That section is the canonical “what to copy where” checklist; individual scanner guides only add tool-specific secrets and options. **Subsidiary or divisional security** may maintain their own forked “golden” template (see [Staying current with upstream runbooks](#staying-current-with-upstream-runbooks)) as long as it **meets or exceeds** corporate minimums.
 
@@ -114,6 +114,8 @@ Scanner scripts and guides live **next to** `framework/` and `program/` on purpo
 
 ## Using these runbooks in your own repository
 
+**GitHub Actions — step-by-step (copy → push → Actions runs):** [setup-github-actions.md](setup-github-actions.md). That page lists the exact files and settings; the checklist below is the same content in short form.
+
 The templates in this folder assume jobs run from the **repository root** and shell scripts live at **`runbooks/appsec/<name>.sh`** (see any `github-actions-*.yml` `run:` line). When an **operating company or product team** adopts a control, they should do the following **in order** (unless Corporate Security instructs you to pull from an internal golden repo instead—see below).
 
 1. **Copy the shell scripts** you need into the same path, **`runbooks/appsec/`**, from the repo root (create the directories if missing). Without that path, pasted workflows will not find the scripts unless you edit every `run:` path.
@@ -123,7 +125,7 @@ The templates in this folder assume jobs run from the **repository root** and sh
 5. **LLM PR review:** besides the workflow YAML, add the prompt file(s) described in [pr-llm-security-review.md](pr-llm-security-review.md) under `.github/`—only where corporate policy allows sending code or findings to an external model.
 6. **Policy / program docs (optional):** teams may copy or link `framework/` and `program/` for context; they are **not** required for scanners to run.
 
-**Fork for demos:** Fork this repository (or a subtree) so paths and demos stay aligned; use [demo-github-security-ci-walkthrough.md](demo-github-security-ci-walkthrough.md) to validate Actions.
+**Demos:** Clone or fork this repository to obtain the files, then follow [demo-github-security-ci-walkthrough.md](demo-github-security-ci-walkthrough.md) — you run Actions **in your own repo** after copying workflows per [setup-github-actions.md](setup-github-actions.md).
 
 ### Staying current with upstream runbooks
 
@@ -188,6 +190,7 @@ Use the [implementation master checklist](program/implementation-master-checklis
 
 ## Quick links (all program assets)
 
+- [GitHub Actions: copy-paste setup](setup-github-actions.md)
 - [Full-circle overview](appsec-program-full-circle.md)
 - [Policy baseline](framework/appsec-policy-baseline.md) · [Policy baseline — controls only](framework/appsec-policy-baseline-minified.md) · [Contextual policy enhancements](framework/appsec-policy-baseline-contextual-enhancements.md) (PII, PHI, PCI, etc.)
 - [Policy evidence mapping (YAML)](framework/policy-evidence-mapping.yaml)

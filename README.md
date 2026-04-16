@@ -4,13 +4,16 @@ Practical, standalone security runbooks for CI/CD pipelines.
 
 **Corporate Security** can publish this repository (or a private fork) as the **authoritative program and runbook bundle** for **operating companies and internal engineering**. We provide the lifecycle docs, policy baseline template, and runnable scanner jobs; **corporate policy** (your customized baseline) states what is mandatory by tier. Teams adopt controls by copying files per **[Using these runbooks in your own repository](runbooks/appsec/README.md#using-these-runbooks-in-your-own-repository)**, or by consuming a **[corporate golden repo](runbooks/appsec/README.md#staying-current-with-upstream-runbooks)** that we keep current. **Subsidiary or divisional** teams may maintain their own internal golden fork as described there, subject to corporate minimums.
 
+**Copy-paste into your own repo and run GitHub Actions:** [`runbooks/appsec/setup-github-actions.md`](runbooks/appsec/setup-github-actions.md) — exact steps, sample folder layout, one or multiple workflow files.
+
 ## AppSec program (start here)
 
 **Main user flow and navigation:** [`runbooks/appsec/README.md`](runbooks/appsec/README.md) — journey from policy → lifecycle phases → scanners → SAMM, plus repository layout and **known gaps**.
 
 Quick pointers:
 
-- **GitHub Actions demo (fork → scans → artifacts):** [`runbooks/appsec/demo-github-security-ci-walkthrough.md`](runbooks/appsec/demo-github-security-ci-walkthrough.md) — workflow: [`.github/workflows/security-demo-gate.yml`](.github/workflows/security-demo-gate.yml)
+- **GitHub Actions setup (copy workflows + runbooks):** [`runbooks/appsec/setup-github-actions.md`](runbooks/appsec/setup-github-actions.md)
+- **Demo walkthrough (optional):** [`runbooks/appsec/demo-github-security-ci-walkthrough.md`](runbooks/appsec/demo-github-security-ci-walkthrough.md)
 - Program overview: [`runbooks/appsec/appsec-program-full-circle.md`](runbooks/appsec/appsec-program-full-circle.md)
 - Implementation tracker: [`runbooks/appsec/program/implementation-master-checklist.md`](runbooks/appsec/program/implementation-master-checklist.md)
 - Policy baseline: [`runbooks/appsec/framework/appsec-policy-baseline.md`](runbooks/appsec/framework/appsec-policy-baseline.md)
