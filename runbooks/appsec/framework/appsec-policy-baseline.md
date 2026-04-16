@@ -3,6 +3,8 @@
 ## Purpose
 This is a reusable, policy-driven app sec baseline for development teams. This baseline is a minimum level of application security intended to be enhanced upon based on specific applications level of data collection and handling.
 
+When your organization publishes this document, **Corporate Security** owns the authoritative text: **corporate policy** (this baseline, once customized and approved by legal/GRC) states what **operating companies and engineering teams must implement**. Teams may add **stricter** local rules; weaker thresholds require the corporate **exception** process.
+
 Each control below includes a **short requirement** (MUST/SHOULD) plus **actionable guidance**: who acts, what to do, what “good” looks like, and where evidence is described in Layer 2.
 
 **Quick reference:** Minified requirements and actions only (no tables)—[`appsec-policy-baseline-minified.md`](appsec-policy-baseline-minified.md).

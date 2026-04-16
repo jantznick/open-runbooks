@@ -30,6 +30,8 @@ Catch issues as early as possible in developer workflows before CI and release.
 - Quality guardrails: linting/formatting/test checks
 - Workflow hooks: pre-commit, Husky, or CI-required checks
 
+**Corporate Security** publishes runnable implementations under `runbooks/appsec/` (shell + CI templates). Engineering teams put them in service repositories per **corporate policy** and [Using these runbooks in your own repository](../README.md#using-these-runbooks-in-your-own-repository) (or your internal golden repo).
+
 ## Minimum Viable Process
 - PR template includes security checklist
 - Required PR checks:

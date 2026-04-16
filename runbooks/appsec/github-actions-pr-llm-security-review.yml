@@ -1,0 +1,160 @@
+# LLM-assisted PR security review (advisory).
+# Copy to .github/workflows/ in your repo; set secrets/vars and customize the prompt file.
+#
+# Required:
+#   Secret:  OPENAI_API_KEY
+#   Variable (recommended): LLM_MODEL — e.g. gpt-4o-mini
+#   File:    .github/llm-security-review-prompt.md (instructions for the reviewer)
+#
+# See: runbooks/appsec/pr-llm-security-review.md
+
+name: pr-llm-security-review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: pr-llm-security-review-${{ github.repository }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build diff text
+        id: diff
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          MAX_CHARS: "120000"
+        run: |
+          set -euo pipefail
+          git diff "${BASE_SHA}"..."${HEAD_SHA}" > pr.diff || true
+          python3 <<'PY'
+          import os
+          path = "pr.diff"
+          maxc = int(os.environ.get("MAX_CHARS", "120000"))
+          data = open(path, "rb").read().decode("utf-8", errors="replace")
+          truncated = len(data) > maxc
+          if truncated:
+              data = data[:maxc] + "\n\n[diff truncated by workflow; increase MAX_CHARS or narrow the PR]\n"
+          open("pr.diff", "w", encoding="utf-8").write(data)
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as gh:
+              print(f"truncated={'true' if truncated else 'false'}", file=gh)
+          PY
+
+      - name: Run LLM review
+        id: llm
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          LLM_MODEL: ${{ vars.LLM_MODEL }}
+          LLM_API_BASE: ${{ vars.LLM_API_BASE }}
+        run: |
+          set -euo pipefail
+          if [ -z "${OPENAI_API_KEY:-}" ]; then
+            echo "OPENAI_API_KEY secret is not set." >&2
+            exit 1
+          fi
+          PROMPT_FILE=".github/llm-security-review-prompt.md"
+          if [ ! -f "$PROMPT_FILE" ]; then
+            echo "Missing $PROMPT_FILE — add it to the repository." >&2
+            exit 1
+          fi
+          python3 <<'PY'
+          import json, os, urllib.request
+
+          api_key = os.environ["OPENAI_API_KEY"]
+          model = os.environ.get("LLM_MODEL") or "gpt-4o-mini"
+          base = os.environ.get("LLM_API_BASE") or "https://api.openai.com/v1"
+          base = base.rstrip("/")
+
+          with open(".github/llm-security-review-prompt.md", encoding="utf-8") as f:
+              system_instructions = f.read()
+          with open("pr.diff", encoding="utf-8") as f:
+              diff = f.read()
+
+          user_msg = (
+              "You are reviewing a pull request diff. Base and head are already reflected in the diff.\n\n"
+              "=== DIFF (unified) ===\n"
+              + diff
+          )
+
+          body = {
+              "model": model,
+              "messages": [
+                  {"role": "system", "content": system_instructions},
+                  {"role": "user", "content": user_msg},
+              ],
+              "temperature": 0.2,
+          }
+
+          req = urllib.request.Request(
+              f"{base}/chat/completions",
+              data=json.dumps(body).encode("utf-8"),
+              headers={
+                  "Authorization": f"Bearer {api_key}",
+                  "Content-Type": "application/json",
+              },
+              method="POST",
+          )
+
+          with urllib.request.urlopen(req, timeout=300) as resp:
+              raw = resp.read().decode("utf-8")
+
+          data = json.loads(raw)
+          try:
+              text = data["choices"][0]["message"]["content"]
+          except (KeyError, IndexError) as e:
+              raise SystemExit(f"Unexpected API response: {raw[:2000]}") from e
+
+          with open("review.md", "w", encoding="utf-8") as out:
+              out.write(text)
+          PY
+
+      - name: Post PR comment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('review.md', 'utf8');
+            const truncated = '${{ steps.diff.outputs.truncated }}' === 'true';
+            const header = '## LLM security review (advisory)\n\n';
+            const meta = `_Model: \`${{ vars.LLM_MODEL || 'gpt-4o-mini' }}\` · Workflow: \`${{ github.workflow }}\` · Run: ${context.runId}_\n\n`;
+            const warn = truncated ? '_Note: diff was truncated for size._\n\n' : '';
+            const full = header + meta + warn + body;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const marker = '<!-- pr-llm-security-review -->';
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body: marker + '\n' + full,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: marker + '\n' + full,
+              });
+            }

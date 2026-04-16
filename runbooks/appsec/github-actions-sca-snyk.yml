@@ -1,0 +1,35 @@
+name: sca-snyk
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  sca:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure runbook script executable
+        run: chmod +x ./runbooks/appsec/sca-snyk-basic.sh
+
+      - name: Run Snyk Open Source SCA runbook
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SCA_SCAN_PATH: ${{ vars.SCA_SCAN_PATH || '.' }}
+          SEC_OUTPUT_DIR: ./artifacts/security
+          SCA_REPORT_PREFIX: sca-snyk
+          SCA_FAIL_ON_FAILS: "true"
+          SCA_SNYK_SEVERITY_THRESHOLD: ${{ vars.SCA_SNYK_SEVERITY_THRESHOLD || 'high' }}
+          SCA_SNYK_ALL_PROJECTS: ${{ vars.SCA_SNYK_ALL_PROJECTS || 'false' }}
+        run: ./runbooks/appsec/sca-snyk-basic.sh
+
+      - name: Upload Snyk SCA artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sca-snyk-results
+          path: artifacts/security/sca-snyk.json

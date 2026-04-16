@@ -24,14 +24,19 @@ Provide deterministic, auditable security quality gates before merge/release pro
 - Apply severity thresholds and exception handling
 - Separate required vs non-blocking deeper scans
 
+## How controls land in service repositories
+
+Scanner jobs in this program are implemented as **shell runbooks** plus optional **CI YAML** that invokes them from the repo root (`./runbooks/appsec/...`). **Corporate Security** provides these templates; **engineering teams copy** what **corporate policy** requires for their application tier into service repositories. The canonical checklist is [Using these runbooks in your own repository](../README.md#using-these-runbooks-in-your-own-repository). Where **Corporate Security** maintains an internal **golden repo**, teams may sync from that instead of pasting from the public catalog—see [Staying current with upstream runbooks](../README.md#staying-current-with-upstream-runbooks) (including divisional forks).
+
 ## Suggested Tooling in This Repo
 - Required:
-  - SAST (Semgrep/OpenGrep)
+  - SAST (Semgrep/OpenGrep, or Snyk Code — `sast-snyk-code-basic.md`)
   - Secrets (TruffleHog)
-  - SCA (Trivy)
+  - SCA (Trivy, or Snyk Open Source — `sca-snyk-basic.md`)
   - DAST baseline (ZAP)
   - DAST template layer (Nuclei)
 - Optional/non-blocking:
+  - LLM-assisted PR security review (advisory narrative; not a substitute for scanners) — see `runbooks/appsec/pr-llm-security-review.md`
   - ZAP full
   - Dastardly (until runner stability is proven)
 

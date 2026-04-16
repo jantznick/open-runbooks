@@ -5,7 +5,9 @@
 ## Purpose
 Provide one execution tracker for implementing and customizing all AppSec program documents and controls in this repository.
 
-Use this as the project plan for rollout across teams and organizations.
+**Corporate Security** uses this as the master rollout plan across **operating companies**; business-unit AppSec leads track the same items for their scope. **We will provide** updated checklists as the program bundle matures.
+
+When workstreams need **concrete CI controls** in service repositories, point engineering to the handoff checklist [Using these runbooks in your own repository](../README.md#using-these-runbooks-in-your-own-repository) (copy paths, secrets, corporate golden repo, or divisional fork).
 
 ## How to Use
 - Set a status for each item:

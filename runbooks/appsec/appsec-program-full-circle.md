@@ -2,6 +2,8 @@
 
 **Navigation:** For the recommended **user journey** (policy → phases → scanners → SAMM) and folder map, start at [`README.md`](README.md) in this directory.
 
+**Corporate Security → operating companies:** Program and phase documents here describe *process* (much of it still **draft**—see tone in this file and gaps below). **We will provide** updates as this bundle matures; once your organization **adopts** the customized baseline, **corporate policy** should treat the agreed controls as the minimum bar. **Runnable scanners** live beside the process docs as shell runbooks and CI YAML. Engineering teams read the phases that apply to them, pick controls **Corporate Security** has approved for their tier from the [scanner table](README.md#scanner-runbooks-and-ci-templates), then **copy** scripts and workflows into service repositories per [Using these runbooks in your own repository](README.md#using-these-runbooks-in-your-own-repository), or consume them from a [corporate golden repo](README.md#staying-current-with-upstream-runbooks). **Internal company teams** may also fork a **divisional golden template** as described there, provided they meet or exceed corporate minimums.
+
 ## Goal
 Define a practical end-to-end application security program that can start simple, run in CI/CD, and mature over time without blocking delivery.
 
@@ -156,11 +158,12 @@ Mapping intent:
 
 ### SAST
 - Semgrep/OpenGrep: `sast-semgrep-opengrep-basic.sh`
-- Strengths: fast, shift-left, catches code-level anti-patterns
-- Downfalls:
-  - rule quality determines signal quality
-  - can miss logic flaws without custom rules
-  - false positives need tuning
+  - Strengths: fast, shift-left, catches code-level anti-patterns
+  - Downfalls:
+    - rule quality determines signal quality
+    - can miss logic flaws without custom rules
+    - false positives need tuning
+- Snyk Code: `sast-snyk-code-basic.sh` / `sast-snyk-code-basic.md` (Docker runner; requires `SNYK_TOKEN`)
 
 ### Secrets
 - TruffleHog: `secrets-trufflehog-basic.sh`
@@ -171,10 +174,11 @@ Mapping intent:
 
 ### SCA
 - Trivy filesystem SCA: `sca-trivy-basic.sh`
-- Strengths: simple, broad package ecosystem coverage, CI-friendly
-- Downfalls:
-  - vulnerability context/exploitability still needs triage
-  - database freshness and ecosystem lockfile quality affect results
+  - Strengths: simple, broad package ecosystem coverage, CI-friendly
+  - Downfalls:
+    - vulnerability context/exploitability still needs triage
+    - database freshness and ecosystem lockfile quality affect results
+- Snyk Open Source: `sca-snyk-basic.sh` / `sca-snyk-basic.md` (Docker runner; `snyk test` with manifests/lockfiles and `SNYK_TOKEN` in CI)
 
 ### DAST
 - ZAP baseline/full: `dast-zap-basic.sh`

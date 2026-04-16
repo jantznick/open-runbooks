@@ -1,0 +1,268 @@
+# LLM-assisted PR review from SAST + SCA JSON (smaller payload than full diff).
+# Copy into .github/workflows/ in your repo — it runs Semgrep + Trivy, then posts an LLM triage comment.
+#
+# If you only want one scanner, delete the other job in this file and fix `needs:` / download steps
+# (see runbooks/appsec/pr-llm-security-review.md).
+#
+# Artifact paths match this repo’s Semgrep + Trivy runbooks; change the upload `path:` values here
+# if your scanners write different filenames.
+#
+# Required:
+#   Secret: OPENAI_API_KEY
+#   Variable (recommended): LLM_MODEL
+#   File: .github/llm-security-review-findings-prompt.md
+#
+# Scanner steps use continue-on-error so findings are still uploaded when a tool exits non-zero.
+# Keep merge-blocking SAST/SCA in separate workflows; this one is advisory triage only.
+#
+# See: runbooks/appsec/pr-llm-security-review.md
+
+name: pr-llm-security-review-findings
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: pr-llm-findings-${{ github.repository }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  sast:
+    name: SAST (Semgrep) for LLM
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure runbook script executable
+        run: chmod +x ./runbooks/appsec/sast-semgrep-opengrep-basic.sh
+
+      - name: Run SAST runbook
+        continue-on-error: true
+        env:
+          SAST_SCAN_PATH: ${{ vars.SAST_SCAN_PATH || '.' }}
+          SAST_RULESET: ${{ vars.SAST_RULESET || 'p/security-audit' }}
+          SEC_OUTPUT_DIR: ./artifacts/security
+          SAST_FAIL_ON_FINDINGS: "true"
+        run: ./runbooks/appsec/sast-semgrep-opengrep-basic.sh
+
+      - name: Upload SAST JSON for LLM
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-llm-sast-json
+          path: artifacts/security/sast-results.json
+          if-no-files-found: ignore
+
+  sca:
+    name: SCA (Trivy) for LLM
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure runbook script executable
+        run: chmod +x ./runbooks/appsec/sca-trivy-basic.sh
+
+      - name: Run Trivy SCA runbook
+        continue-on-error: true
+        env:
+          SCA_SCAN_PATH: ${{ vars.SCA_SCAN_PATH || '.' }}
+          SEC_OUTPUT_DIR: ./artifacts/security
+          SCA_REPORT_PREFIX: trivy-sca
+          SCA_FAIL_ON_FAILS: "true"
+          SCA_FAIL_ON_WARNINGS: "false"
+        run: ./runbooks/appsec/sca-trivy-basic.sh
+
+      - name: Upload SCA JSON for LLM
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-llm-sca-json
+          path: artifacts/security/trivy-sca.json
+          if-no-files-found: ignore
+
+  llm:
+    name: LLM triage comment
+    needs: [sast, sca]
+    if: always() && !cancelled()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download SAST artifact
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: pr-llm-sast-json
+          path: ./llm-input/sast
+
+      - name: Download SCA artifact
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: pr-llm-sca-json
+          path: ./llm-input/sca
+
+      - name: Build findings bundle and call LLM
+        id: llm
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          LLM_MODEL: ${{ vars.LLM_MODEL }}
+          LLM_API_BASE: ${{ vars.LLM_API_BASE }}
+          MAX_CHARS: "120000"
+        run: |
+          set -euo pipefail
+          if [ -z "${OPENAI_API_KEY:-}" ]; then
+            echo "OPENAI_API_KEY secret is not set." >&2
+            exit 1
+          fi
+          PROMPT_FILE=".github/llm-security-review-findings-prompt.md"
+          if [ ! -f "$PROMPT_FILE" ]; then
+            echo "Missing $PROMPT_FILE — add it to the repository." >&2
+            exit 1
+          fi
+          python3 <<'PY'
+          import json, os, pathlib, urllib.request
+
+          def read_json_files(root: pathlib.Path, label: str):
+              if not root.is_dir():
+                  return None
+              parts = []
+              for p in sorted(root.rglob("*.json")):
+                  try:
+                      text = p.read_text(encoding="utf-8", errors="replace")
+                      json.loads(text)
+                  except (OSError, json.JSONDecodeError) as e:
+                      parts.append(f"=== {label}: {p.name} (parse warning: {e}) ===\n{text[:50000]}\n")
+                      continue
+                  parts.append(f"=== {label}: {p.name} ===\n{text}\n")
+              if not parts:
+                  return None
+              return "\n".join(parts)
+
+          sast_block = read_json_files(pathlib.Path("llm-input/sast"), "SAST")
+          sca_block = read_json_files(pathlib.Path("llm-input/sca"), "SCA")
+
+          bundle = []
+          bundle.append(
+              "You are triaging pull-request security findings from automated scanners. "
+              "Each labeled section below is raw JSON from CI when present.\n"
+          )
+          if sast_block:
+              bundle.append(sast_block)
+          else:
+              bundle.append(
+                  "=== SAST ===\n"
+                  "(no SAST JSON captured; scan may have failed before write or artifact was missing)\n"
+              )
+          if sca_block:
+              bundle.append(sca_block)
+          else:
+              bundle.append(
+                  "=== SCA ===\n"
+                  "(no SCA JSON captured; scan may have failed before write or artifact was missing)\n"
+              )
+
+          combined = "\n".join(bundle)
+          maxc = int(os.environ.get("MAX_CHARS", "120000"))
+          truncated = len(combined) > maxc
+          if truncated:
+              combined = combined[:maxc] + "\n\n[combined findings truncated; increase MAX_CHARS or narrow scans]\n"
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as gh:
+              print(f"truncated={'true' if truncated else 'false'}", file=gh)
+              print(f"has_sast_block={'true' if sast_block else 'false'}", file=gh)
+              print(f"has_sca_block={'true' if sca_block else 'false'}", file=gh)
+
+          api_key = os.environ["OPENAI_API_KEY"]
+          model = os.environ.get("LLM_MODEL") or "gpt-4o-mini"
+          base = (os.environ.get("LLM_API_BASE") or "https://api.openai.com/v1").rstrip("/")
+
+          with open(".github/llm-security-review-findings-prompt.md", encoding="utf-8") as f:
+              system_instructions = f.read()
+
+          user_msg = (
+              "Context: findings JSON from CI scanners for this pull request.\n\n"
+              "=== FINDINGS (raw JSON and labels) ===\n"
+              + combined
+          )
+
+          body = {
+              "model": model,
+              "messages": [
+                  {"role": "system", "content": system_instructions},
+                  {"role": "user", "content": user_msg},
+              ],
+              "temperature": 0.2,
+          }
+
+          req = urllib.request.Request(
+              f"{base}/chat/completions",
+              data=json.dumps(body).encode("utf-8"),
+              headers={
+                  "Authorization": f"Bearer {api_key}",
+                  "Content-Type": "application/json",
+              },
+              method="POST",
+          )
+
+          with urllib.request.urlopen(req, timeout=300) as resp:
+              raw = resp.read().decode("utf-8")
+
+          data = json.loads(raw)
+          try:
+              text = data["choices"][0]["message"]["content"]
+          except (KeyError, IndexError) as e:
+              raise SystemExit(f"Unexpected API response: {raw[:2000]}") from e
+
+          with open("review.md", "w", encoding="utf-8") as out:
+              out.write(text)
+          PY
+
+      - name: Post PR comment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('review.md', 'utf8');
+            const truncated = '${{ steps.llm.outputs.truncated }}' === 'true';
+            const hasSast = '${{ steps.llm.outputs.has_sast_block }}' === 'true';
+            const hasSca = '${{ steps.llm.outputs.has_sca_block }}' === 'true';
+            const header = '## LLM security triage (scanner findings)\n\n';
+            const meta = `_Model: \`${{ vars.LLM_MODEL || 'gpt-4o-mini' }}\` · Workflow: \`${{ github.workflow }}\` · Run: ${context.runId}_\n`;
+            const sources = `_Sources: SAST ${hasSast ? '✓' : '—'} · SCA ${hasSca ? '✓' : '—'}_\n\n`;
+            const warn = truncated ? '_Note: combined findings were truncated for size._\n\n' : '';
+            const full = header + meta + sources + warn + body;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const marker = '<!-- pr-llm-security-review-findings -->';
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body: marker + '\n' + full,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: marker + '\n' + full,
+              });
+            }

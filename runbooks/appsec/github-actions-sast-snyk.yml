@@ -1,0 +1,33 @@
+name: sast-snyk-code
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  sast:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure runbook script executable
+        run: chmod +x ./runbooks/appsec/sast-snyk-code-basic.sh
+
+      - name: Run Snyk Code SAST runbook
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SAST_SCAN_PATH: ${{ vars.SAST_SCAN_PATH || '.' }}
+          SEC_OUTPUT_DIR: ./artifacts/security
+          SAST_FAIL_ON_FINDINGS: "true"
+          SAST_SNYK_SEVERITY_THRESHOLD: ${{ vars.SAST_SNYK_SEVERITY_THRESHOLD || 'high' }}
+        run: ./runbooks/appsec/sast-snyk-code-basic.sh
+
+      - name: Upload Snyk Code artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sast-snyk-code-results
+          path: artifacts/security/sast-snyk-code.json
