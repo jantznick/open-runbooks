@@ -1,5 +1,7 @@
 # Full-Circle AppSec Program (Draft)
 
+**Navigation:** For the recommended **user journey** (policy → phases → scanners → SAMM) and folder map, start at [`README.md`](README.md) in this directory.
+
 ## Goal
 Define a practical end-to-end application security program that can start simple, run in CI/CD, and mature over time without blocking delivery.
 

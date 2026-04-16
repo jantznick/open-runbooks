@@ -2,22 +2,18 @@
 
 Practical, standalone security runbooks for CI/CD pipelines.
 
-## AppSec Program Docs (Canonical)
-- Program overview and roadmap: `runbooks/appsec/appsec-program-full-circle.md`
-- OWASP SAMM reference and local alignment: `runbooks/appsec/program/framework-owasp-samm.md`
-- OWASP SAMM coverage checklist template: `runbooks/appsec/program/samm-coverage-checklist.md`
-- Program implementation tracker: `runbooks/appsec/program/implementation-master-checklist.md`
-- Policy baseline (normative controls): `runbooks/appsec/framework/appsec-policy-baseline.md`
-- Policy-to-evidence mapping template: `runbooks/appsec/framework/policy-evidence-mapping.yaml`
-- Phase guides:
-  - `runbooks/appsec/program/01-plan-and-design.md`
-  - `runbooks/appsec/program/02-build-and-commit.md`
-  - `runbooks/appsec/program/03-ci-gate.md`
-  - `runbooks/appsec/program/04-release-and-deploy.md`
-  - `runbooks/appsec/program/05-runtime-and-operate.md`
-  - `runbooks/appsec/program/06-improve-and-govern.md`
+## AppSec program (start here)
 
-Use those files for full lifecycle/process detail. This README is intentionally a quick index.
+**Main user flow and navigation:** [`runbooks/appsec/README.md`](runbooks/appsec/README.md) — journey from policy → lifecycle phases → scanners → SAMM, plus repository layout and **known gaps**.
+
+Quick pointers:
+
+- Program overview: [`runbooks/appsec/appsec-program-full-circle.md`](runbooks/appsec/appsec-program-full-circle.md)
+- Implementation tracker: [`runbooks/appsec/program/implementation-master-checklist.md`](runbooks/appsec/program/implementation-master-checklist.md)
+- Policy baseline: [`runbooks/appsec/framework/appsec-policy-baseline.md`](runbooks/appsec/framework/appsec-policy-baseline.md)
+- Evidence mapping (YAML): [`runbooks/appsec/framework/policy-evidence-mapping.yaml`](runbooks/appsec/framework/policy-evidence-mapping.yaml)
+
+Phase guides (`01`–`06`), SAMM docs, and scanner tables are linked from the AppSec README above. This root README stays a short index.
 
 ## Runbook Index
 
