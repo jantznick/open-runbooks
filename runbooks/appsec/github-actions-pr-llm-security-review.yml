@@ -7,6 +7,9 @@
 #   File:    .github/llm-security-review-prompt.md (instructions for the reviewer)
 #   Example to copy: runbooks/appsec/llm-security-review-prompt.example.md
 #
+# PR title and description are included in the LLM user message (from the webhook payload).
+# This job is skipped for Dependabot PRs (secrets + noise); remove `if` to run on those PRs too.
+#
 # See: runbooks/appsec/pr-llm-security-review.md
 
 name: pr-llm-security-review
@@ -25,6 +28,7 @@ permissions:
 
 jobs:
   review:
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -84,9 +88,35 @@ jobs:
           with open("pr.diff", encoding="utf-8") as f:
               diff = f.read()
 
+          pr_title = ""
+          pr_body = ""
+          event_path = os.environ.get("GITHUB_EVENT_PATH")
+          if event_path and os.path.isfile(event_path):
+              with open(event_path, encoding="utf-8") as f:
+                  event = json.load(f)
+              pr = event.get("pull_request") or {}
+              pr_title = (pr.get("title") or "").strip()
+              pr_body = pr.get("body") or ""
+
+          max_body = 20000
+          if len(pr_body) > max_body:
+              pr_body = pr_body[:max_body] + "\n\n[PR description truncated for size]\n"
+
+          pr_block = ""
+          if pr_title or pr_body:
+              pr_block = (
+                  "=== PR title ===\n"
+                  + pr_title
+                  + "\n\n=== PR description ===\n"
+                  + pr_body
+                  + "\n\n"
+              )
+
           user_msg = (
-              "You are reviewing a pull request diff. Base and head are already reflected in the diff.\n\n"
-              "=== DIFF (unified) ===\n"
+              "You are reviewing a pull request. Use the title and description for intent/context where helpful; "
+              "the code changes are in the unified diff below.\n\n"
+              + pr_block
+              + "=== DIFF (unified) ===\n"
               + diff
           )
 

@@ -52,9 +52,10 @@ This workflow runs **Semgrep** and **Trivy SCA** on every matching PR (same scri
 ## Scope
 
 - Open pull requests (and updates to them) on branches you configure in the pasted workflow.
-- **Template A:** the **diff** between the PR base and head commits (bounded by the workflow’s character cap).
+- **Template A:** the PR **title** and **description** (from the webhook payload) plus the **diff** between base and head (diff is bounded by the workflow’s character cap; very long descriptions truncate at 20k characters).
 - **Template B:** **scanner JSON** from the jobs in that workflow (bounded by the same style of cap).
 - Repositories that may send that content to an external LLM API (governance and data-handling decision).
+- **Template A** skips **Dependabot** PRs by default (`dependabot[bot]`) so you do not need Dependabot-specific secrets for this job; remove the job-level `if` in the YAML if you want LLM review on dependency PRs too.
 
 ## When to use
 
@@ -86,6 +87,7 @@ Prompt and behavior:
 
 - **Prompt file**: `.github/llm-security-review-prompt.md` in the target repo (customize freely; keep instructions on scope, severity labels, and “no invented CVEs”).
 - **Diff size**: the template truncates very large diffs to avoid token limits and runaway cost; tune the limit in the workflow if needed.
+- **Dependabot**: the diff workflow’s job is skipped for `dependabot[bot]` (see template `if`). Use a normal branch PR to test with repository secrets, or add Dependabot secrets and remove the `if` if you want this job on Dependabot PRs.
 
 ## Outputs
 
