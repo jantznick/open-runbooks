@@ -27,7 +27,8 @@ Use:
 
 Copy it to `.github/workflows/` in your repository and adjust names or triggers if you want. The template uses **OpenAI-compatible** chat completions (`/v1/chat/completions`); many providers expose the same shape.
 
-**Prompt file:** `.github/llm-security-review-prompt.md`
+**Prompt file:** `.github/llm-security-review-prompt.md`  
+**Example to copy:** `runbooks/appsec/llm-security-review-prompt.example.md`
 
 ### B — Scanner findings only (SAST + SCA JSON)
 
@@ -124,7 +125,7 @@ GitHub does not expose repository secrets to workflows triggered by `pull_reques
 **Diff workflow**
 
 1. Copy `github-actions-pr-llm-security-review.yml` to `.github/workflows/pr-llm-security-review.yml`.
-2. Add `.github/llm-security-review-prompt.md` with your security review instructions.
+2. Copy `llm-security-review-prompt.example.md` to `.github/llm-security-review-prompt.md` and edit (or author your own prompt at that path).
 3. Set repository secret `OPENAI_API_KEY` and variable `LLM_MODEL`.
 4. Open a test PR and confirm a comment appears.
 

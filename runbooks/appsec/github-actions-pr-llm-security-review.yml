@@ -5,6 +5,7 @@
 #   Secret:  OPENAI_API_KEY
 #   Variable (recommended): LLM_MODEL — e.g. gpt-4o-mini
 #   File:    .github/llm-security-review-prompt.md (instructions for the reviewer)
+#   Example to copy: runbooks/appsec/llm-security-review-prompt.example.md
 #
 # See: runbooks/appsec/pr-llm-security-review.md
 
