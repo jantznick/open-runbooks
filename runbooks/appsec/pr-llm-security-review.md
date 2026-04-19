@@ -91,7 +91,7 @@ Prompt and behavior:
 
 ## Outputs
 
-- A PR comment containing the model output (markdown).
+- **One issue comment per PR**, updated on each run. The **latest** review is always at the top: it includes **commit list** (`git log` for `base…head`), **diff stat** (`git diff --stat` for the PR range), then the model’s markdown. Older runs are preserved under **Earlier reviews (same PR)** in a `<details>` block (nested on each push so you can expand history). Very long threads may hit GitHub’s ~65k character comment limit; the template truncates with a note.
 - Optional: upload the raw model response as an artifact for audit (add a step in your fork).
 
 ## Fix PRs (advanced)

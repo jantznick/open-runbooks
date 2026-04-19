@@ -45,6 +45,8 @@ jobs:
         run: |
           set -euo pipefail
           git diff "${BASE_SHA}"..."${HEAD_SHA}" > pr.diff || true
+          git log "${BASE_SHA}..${HEAD_SHA}" --oneline --no-decorate 2>/dev/null | head -50 > commit-log.txt || true
+          git diff --stat "${BASE_SHA}...${HEAD_SHA}" 2>/dev/null | head -100 > diff-stat.txt || true
           python3 <<'PY'
           import os
           path = "pr.diff"
@@ -158,12 +160,55 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const body = fs.readFileSync('review.md', 'utf8');
+            const reviewBody = fs.readFileSync('review.md', 'utf8');
+            let commitLog = '';
+            let diffStat = '';
+            try {
+              commitLog = fs.readFileSync('commit-log.txt', 'utf8').trim();
+            } catch (e) {
+              commitLog = '(commit list unavailable)';
+            }
+            try {
+              diffStat = fs.readFileSync('diff-stat.txt', 'utf8').trim();
+            } catch (e) {
+              diffStat = '(diff stat unavailable)';
+            }
+
             const truncated = '${{ steps.diff.outputs.truncated }}' === 'true';
-            const header = '## LLM security review (advisory)\n\n';
-            const meta = `_Model: \`${{ vars.LLM_MODEL || 'gpt-4o-mini' }}\` · Workflow: \`${{ github.workflow }}\` · Run: ${context.runId}_\n\n`;
-            const warn = truncated ? '_Note: diff was truncated for size._\n\n' : '';
-            const full = header + meta + warn + body;
+            const warn = truncated ? '_Note: unified diff sent to the model was truncated for size._\n\n' : '';
+            const modelTag = '${{ vars.LLM_MODEL || 'gpt-4o-mini' }}';
+
+            const pr = context.payload.pull_request;
+            const headSha = pr.head.sha;
+            const baseSha = pr.base.sha;
+            const headShort = headSha.substring(0, 7);
+            const baseShort = baseSha.substring(0, 7);
+
+            const newBlock = [
+              '_Advisory LLM review · **latest run at top** · expand **Earlier reviews** for prior runs._',
+              '',
+              '### Latest LLM review',
+              '',
+              `_Model: \`${modelTag}\` · workflow \`${{ github.workflow }}\` · run ${context.runId} · ${new Date().toISOString()} · \`${baseShort}…${headShort}\`_`,
+              '',
+              warn,
+              '**Commits in range** (`' + baseShort + '…' + headShort + '`):',
+              '',
+              '```text',
+              commitLog || '(none)',
+              '```',
+              '',
+              '**Diff stat** (`git diff --stat` for this PR range):',
+              '',
+              '```text',
+              diffStat || '(none)',
+              '```',
+              '',
+              reviewBody,
+              '',
+              '---',
+              '',
+            ].join('\n');
 
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
@@ -174,18 +219,45 @@ jobs:
             const marker = '<!-- pr-llm-security-review -->';
             const existing = comments.find(c => c.body && c.body.includes(marker));
 
+            let prior = '';
+            if (existing && existing.body) {
+              const raw = existing.body;
+              const mi = raw.indexOf(marker);
+              prior = mi === -1 ? raw.trim() : raw.slice(mi + marker.length).trim();
+            }
+
+            let full;
+            if (!prior) {
+              full = marker + '\n\n' + newBlock;
+            } else {
+              full =
+                marker +
+                '\n\n' +
+                newBlock +
+                '\n\n<details>\n<summary>Earlier reviews (same PR)</summary>\n\n' +
+                prior +
+                '\n\n</details>';
+            }
+
+            const maxLen = 62000;
+            if (full.length > maxLen) {
+              full =
+                full.slice(0, maxLen) +
+                '\n\n_[Comment truncated: GitHub issue comment size limit (~65k). Narrow the PR or remove old runs from the thread manually.]_\n';
+            }
+
             if (existing) {
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 comment_id: existing.id,
-                body: marker + '\n' + full,
+                body: full,
               });
             } else {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: marker + '\n' + full,
+                body: full,
               });
             }
