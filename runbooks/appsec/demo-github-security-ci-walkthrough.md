@@ -88,7 +88,7 @@ These are **not** switched on by the shell runbooks alone:
 | Goal | File |
 |------|------|
 | **Exact copy-paste steps + sample layout** | [setup-github-actions.md](setup-github-actions.md) |
-| **Handoff / golden repo** | [README.md](README.md) — [Using these runbooks in your own repository](README.md#using-these-runbooks-in-your-own-repository) |
+| **Handoff / golden repo** | [AppSec program README](../../policy/appsec/README.md) — [Using these runbooks in your own repository](../../policy/appsec/README.md#using-these-runbooks-in-your-own-repository) |
 | **Individual templates** | `runbooks/appsec/github-actions-*.yml` |
 | **Scanner behavior / env vars** | `runbooks/appsec/*-basic.md` |
 | **Demo app** | `test-app-vulnerable-todo/README.md` |

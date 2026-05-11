@@ -57,4 +57,4 @@ Ensure deployable artifacts and deployment configurations are security-validated
 - Time to produce audit evidence for a release
 
 ## Next Related Step
-- `runbooks/appsec/program/05-runtime-and-operate.md`
+- [`05-runtime-and-operate.md`](05-runtime-and-operate.md)

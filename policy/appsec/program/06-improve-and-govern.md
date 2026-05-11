@@ -54,4 +54,4 @@ Run AppSec as a measurable program with clear accountability, continuous tuning,
 - False-positive trend by scanner/rule set
 
 ## Cross-Link
-- Overview and backlog: `runbooks/appsec/appsec-program-full-circle.md`
+- Overview and backlog: [`../appsec-program-full-circle.md`](../appsec-program-full-circle.md)

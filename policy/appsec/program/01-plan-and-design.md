@@ -65,4 +65,4 @@ Build security in before code is written by defining requirements, architecture 
 - # unresolved design-phase risks older than SLA
 
 ## Next Related Step
-- `runbooks/appsec/program/02-build-and-commit.md`
+- [`02-build-and-commit.md`](02-build-and-commit.md)

@@ -59,4 +59,4 @@ Catch issues as early as possible in developer workflows before CI and release.
 - Median remediation time for PR findings
 
 ## Next Related Step
-- `runbooks/appsec/program/03-ci-gate.md`
+- [`03-ci-gate.md`](03-ci-gate.md)

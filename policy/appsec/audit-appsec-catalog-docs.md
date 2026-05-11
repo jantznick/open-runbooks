@@ -194,4 +194,4 @@ None of these require changing the **six-phase model**; they **enrich** Governan
 
 ---
 
-*Generated against open-runbooks `runbooks/appsec/` and appsec-catalog `frontend/docs/` as of the audit date. Update this file as catalog or program docs change.*
+*Generated against open-runbooks `policy/appsec/` (program) and `runbooks/appsec/` (scanner runbooks) and appsec-catalog `frontend/docs/` as of the audit date. Update this file as catalog or program docs change.*

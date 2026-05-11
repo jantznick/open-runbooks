@@ -21,10 +21,10 @@ Use both together:
 1. assess with SAMM,
 2. prioritize gaps,
 3. implement via runbooks and program phase docs in this repo.
-4. track progress using `runbooks/appsec/program/samm-coverage-checklist.md`.
+4. track progress using [`samm-coverage-checklist.md`](samm-coverage-checklist.md).
 5. enforce policy controls using:
-   - `runbooks/appsec/framework/appsec-policy-baseline.md`
-   - `runbooks/appsec/framework/policy-evidence-mapping.yaml`
+   - [`../framework/appsec-policy-baseline.md`](../framework/appsec-policy-baseline.md)
+   - [`../framework/policy-evidence-mapping.yaml`](../framework/policy-evidence-mapping.yaml)
 
 ## SAMM Building Blocks (Practical View)
 
@@ -83,9 +83,9 @@ Typical progression:
 - Running assessments without execution ownership
 
 ## Recommended Adoption Pattern for This Repo
-- Keep `appsec-program-full-circle.md` as program strategy + backlog
+- Keep [`../appsec-program-full-circle.md`](../appsec-program-full-circle.md) as program strategy + backlog
 - Keep phase docs as operating playbooks
-- Use `samm-coverage-checklist.md` as the maturity tracking worksheet
+- Use [`samm-coverage-checklist.md`](samm-coverage-checklist.md) as the maturity tracking worksheet
 - Use SAMM assessment snapshots to prioritize what to build next
 - Review progress quarterly with explicit maturity and risk outcomes
 

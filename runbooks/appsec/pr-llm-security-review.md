@@ -10,11 +10,11 @@ This is **not** a substitute for SAST, SCA, or secrets scanning. It complements 
 
 **Corporate Security** provides these files as **templates**. Operating teams copy the workflow YAML into `.github/workflows/` in the service repo (and add the prompt file, secrets, and the same `runbooks/appsec/` script paths as other approved runbooks). **If the file is present, it runs** — there are no extra “enable this workflow” toggles. Use LLM review only where **corporate policy** permits sending diffs or scanner output to an external API. Optional GitHub **variables** like `LLM_MODEL` or `SAST_SCAN_PATH` only tune behavior after the workflow is adopted; they do not replace organizational approval to run the job.
 
-The same copy-paste order (scripts under `runbooks/appsec/`, then workflow YAML) is spelled out for **all** controls in [AppSec README — Using these runbooks in your own repository](README.md#using-these-runbooks-in-your-own-repository). Ongoing sync options (including the **corporate golden repo**) are in [Staying current with upstream runbooks](README.md#staying-current-with-upstream-runbooks).
+The same copy-paste order (scripts under `runbooks/appsec/`, then workflow YAML) is spelled out for **all** controls in [AppSec README — Using these runbooks in your own repository](../../policy/appsec/README.md#using-these-runbooks-in-your-own-repository). Ongoing sync options (including the **corporate golden repo**) are in [Staying current with upstream runbooks](../../policy/appsec/README.md#staying-current-with-upstream-runbooks).
 
 ## Where it fits in the program
 
-- Aligns with [03 CI Gate](program/03-ci-gate.md): treat this as **optional / non-blocking** unless your org explicitly accepts model risk as a gate.
+- Aligns with [03 CI Gate](../../policy/appsec/program/03-ci-gate.md): treat this as **optional / non-blocking** unless your org explicitly accepts model risk as a gate.
 - Pair with existing runbooks (SAST, SCA, secrets) rather than replacing them.
 
 ## Standalone templates

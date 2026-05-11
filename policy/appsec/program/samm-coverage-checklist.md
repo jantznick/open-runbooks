@@ -4,8 +4,8 @@
 Track current and target SAMM coverage using practical, auditable checklist items tied to this repository.
 
 Use this with:
-- `runbooks/appsec/program/framework-owasp-samm.md`
-- `runbooks/appsec/appsec-program-full-circle.md`
+- [`framework-owasp-samm.md`](framework-owasp-samm.md)
+- [`../appsec-program-full-circle.md`](../appsec-program-full-circle.md)
 
 ## How to Use
 - Mark status for each checklist item:

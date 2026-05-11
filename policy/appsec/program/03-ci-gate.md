@@ -36,7 +36,7 @@ Scanner jobs in this program are implemented as **shell runbooks** plus optional
   - DAST baseline (ZAP)
   - DAST template layer (Nuclei)
 - Optional/non-blocking:
-  - LLM-assisted PR security review (advisory narrative; not a substitute for scanners) — see `runbooks/appsec/pr-llm-security-review.md`
+  - LLM-assisted PR security review (advisory narrative; not a substitute for scanners) — see [`pr-llm-security-review.md`](../../runbooks/appsec/pr-llm-security-review.md)
   - ZAP full
   - Dastardly (until runner stability is proven)
 
@@ -65,4 +65,4 @@ Scanner jobs in this program are implemented as **shell runbooks** plus optional
 - % findings triaged within SLA
 
 ## Next Related Step
-- `runbooks/appsec/program/04-release-and-deploy.md`
+- [`04-release-and-deploy.md`](04-release-and-deploy.md)

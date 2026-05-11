@@ -54,4 +54,4 @@ Continuously detect exposure and security drift in deployed environments and res
 - Reduction of recurring incident classes
 
 ## Next Related Step
-- `runbooks/appsec/program/06-improve-and-govern.md`
+- [`06-improve-and-govern.md`](06-improve-and-govern.md)

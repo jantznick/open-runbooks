@@ -11,7 +11,7 @@ This folder is an **AppSec program template**: policy, lifecycle playbooks, OWAS
 
 ## Live demo on GitHub
 
-To show scans in Actions, follow **[demo-github-security-ci-walkthrough.md](demo-github-security-ci-walkthrough.md)** — you **copy** `runbooks/appsec/` scripts and the `github-actions-*.yml` templates you want into a repo that includes **`test-app-vulnerable-todo`** (or your app), then enable Actions and secrets per **[setup-github-actions.md](setup-github-actions.md)**. This upstream project does **not** ship a mandatory workflow under `.github/workflows/`; adoption is copy-paste only.
+To show scans in Actions, follow **[demo-github-security-ci-walkthrough.md](../../runbooks/appsec/demo-github-security-ci-walkthrough.md)** — you **copy** `runbooks/appsec/` scripts and the `github-actions-*.yml` templates you want into a repo that includes **`test-app-vulnerable-todo`** (or your app), then enable Actions and secrets per **[setup-github-actions.md](../../runbooks/appsec/setup-github-actions.md)**. This upstream project does **not** ship a mandatory workflow under `.github/workflows/`; adoption is copy-paste only.
 
 **Distributing to an operating company or product team?** Point them to **[Using these runbooks in your own repository](#using-these-runbooks-in-your-own-repository)** below (or share this whole file). That section is the canonical “what to copy where” checklist; individual scanner guides only add tool-specific secrets and options. **Subsidiary or divisional security** may maintain their own forked “golden” template (see [Staying current with upstream runbooks](#staying-current-with-upstream-runbooks)) as long as it **meets or exceeds** corporate minimums.
 
@@ -102,30 +102,30 @@ See [Scanner runbooks and CI templates](#scanner-runbooks-and-ci-templates) belo
 
 | Area | Path | Purpose |
 |------|------|---------|
-| **Entry / journey** | `runbooks/appsec/README.md` (this file) | User flow and navigation |
-| **Program strategy** | `appsec-program-full-circle.md` | Overview, tooling summary, gaps backlog |
-| **Policy & evidence** | `framework/` | Normative policy template + YAML for metadata/evidence mapping |
-| **Lifecycle & SAMM** | `program/` | Phase guides (`01`–`06`), SAMM docs, checklists, implementation tracker |
+| **Entry / journey** | `policy/appsec/README.md` (this file) | User flow and navigation |
+| **Program strategy** | `policy/appsec/appsec-program-full-circle.md` | Overview, tooling summary, gaps backlog |
+| **Policy & evidence** | `policy/appsec/framework/` | Normative policy template + YAML for metadata/evidence mapping |
+| **Lifecycle & SAMM** | `policy/appsec/program/` | Phase guides (`01`–`06`), SAMM docs, checklists, implementation tracker |
 | **Scanners + CI** | `runbooks/appsec/*.sh`, `*.md`, `github-actions-*.yml`, `gitlab-ci-*.yml` | Runnable controls and copy-paste pipelines |
 
-Scanner scripts and guides live **next to** `framework/` and `program/` on purpose: easy to find from CI and from this README. A future refactor could move them under `scanners/`; if you do that, update links in this file and in the root README.
+Policy and lifecycle docs live under **`policy/appsec/`**; scanner shell scripts and CI templates live under **`runbooks/appsec/`** (the path your copied workflows invoke from the service repo root). A future refactor could co-locate them; if you do that, update links in this file and in the root README.
 
 ---
 
 ## Using these runbooks in your own repository
 
-**GitHub Actions — step-by-step (copy → push → Actions runs):** [setup-github-actions.md](setup-github-actions.md). That page lists the exact files and settings; the checklist below is the same content in short form.
+**GitHub Actions — step-by-step (copy → push → Actions runs):** [setup-github-actions.md](../../runbooks/appsec/setup-github-actions.md). That page lists the exact files and settings; the checklist below is the same content in short form.
 
-The templates in this folder assume jobs run from the **repository root** and shell scripts live at **`runbooks/appsec/<name>.sh`** (see any `github-actions-*.yml` `run:` line). When an **operating company or product team** adopts a control, they should do the following **in order** (unless Corporate Security instructs you to pull from an internal golden repo instead—see below).
+The workflow templates under **`runbooks/appsec/`** assume jobs run from the **service repository root** and shell scripts live at **`runbooks/appsec/<name>.sh`** (see any `github-actions-*.yml` `run:` line). When an **operating company or product team** adopts a control, they should do the following **in order** (unless Corporate Security instructs you to pull from an internal golden repo instead—see below).
 
 1. **Copy the shell scripts** you need into the same path, **`runbooks/appsec/`**, from the repo root (create the directories if missing). Without that path, pasted workflows will not find the scripts unless you edit every `run:` path.
-2. **Copy the matching GitHub Actions file** from [`github-actions-*.yml`](.) into the service repo’s **`.github/workflows/`** (any filename is fine; adjust `name:` / triggers per corporate standards).
-3. **GitLab:** copy the matching [`gitlab-ci-*.yml`](.) fragment into **`.gitlab-ci.yml`** or use `include:` as your platform prefers.
+2. **Copy the matching GitHub Actions file** from [`github-actions-*.yml`](../../runbooks/appsec/) into the service repo’s **`.github/workflows/`** (any filename is fine; adjust `name:` / triggers per corporate standards).
+3. **GitLab:** copy the matching [`gitlab-ci-*.yml`](../../runbooks/appsec/) fragment into **`.gitlab-ci.yml`** or use `include:` as your platform prefers.
 4. **Secrets and variables:** open the **guide** (the `*-basic.md` for that control) and configure what **Corporate Security** has approved for your environment (for example `SNYK_TOKEN`, `OPENAI_API_KEY`). Optional tuning often uses repository **variables** (`SAST_SCAN_PATH`, `LLM_MODEL`, and so on); those are documented per guide, not duplicated here.
-5. **LLM PR review:** besides the workflow YAML, add the prompt file(s) described in [pr-llm-security-review.md](pr-llm-security-review.md) under `.github/`—only where corporate policy allows sending code or findings to an external model.
+5. **LLM PR review:** besides the workflow YAML, add the prompt file(s) described in [pr-llm-security-review.md](../../runbooks/appsec/pr-llm-security-review.md) under `.github/`—only where corporate policy allows sending code or findings to an external model.
 6. **Policy / program docs (optional):** teams may copy or link `framework/` and `program/` for context; they are **not** required for scanners to run.
 
-**Demos:** Clone or fork this repository to obtain the files, then follow [demo-github-security-ci-walkthrough.md](demo-github-security-ci-walkthrough.md) — you run Actions **in your own repo** after copying workflows per [setup-github-actions.md](setup-github-actions.md).
+**Demos:** Clone or fork this repository to obtain the files, then follow [demo-github-security-ci-walkthrough.md](../../runbooks/appsec/demo-github-security-ci-walkthrough.md) — you run Actions **in your own repo** after copying workflows per [setup-github-actions.md](../../runbooks/appsec/setup-github-actions.md).
 
 ### Staying current with upstream runbooks
 
@@ -149,15 +149,15 @@ There is **no single “always latest”** model that is safe for every enterpri
 
 | Control | Script | Guide | GitHub Actions | GitLab CI |
 |---------|--------|-------|----------------|-----------|
-| SAST | [sast-semgrep-opengrep-basic.sh](sast-semgrep-opengrep-basic.sh) | [sast-semgrep-opengrep-basic.md](sast-semgrep-opengrep-basic.md) | [github-actions-sast.yml](github-actions-sast.yml) | [gitlab-ci-sast.yml](gitlab-ci-sast.yml) |
-| SAST (Snyk Code) | [sast-snyk-code-basic.sh](sast-snyk-code-basic.sh) | [sast-snyk-code-basic.md](sast-snyk-code-basic.md) | [github-actions-sast-snyk.yml](github-actions-sast-snyk.yml) | [gitlab-ci-sast-snyk.yml](gitlab-ci-sast-snyk.yml) |
-| Secrets | [secrets-trufflehog-basic.sh](secrets-trufflehog-basic.sh) | [secrets-trufflehog-basic.md](secrets-trufflehog-basic.md) | [github-actions-secrets-trufflehog.yml](github-actions-secrets-trufflehog.yml) | [gitlab-ci-secrets-trufflehog.yml](gitlab-ci-secrets-trufflehog.yml) |
-| SCA | [sca-trivy-basic.sh](sca-trivy-basic.sh) | [sca-trivy-basic.md](sca-trivy-basic.md) | [github-actions-sca-trivy.yml](github-actions-sca-trivy.yml) | [gitlab-ci-sca-trivy.yml](gitlab-ci-sca-trivy.yml) |
-| SCA (Snyk Open Source) | [sca-snyk-basic.sh](sca-snyk-basic.sh) | [sca-snyk-basic.md](sca-snyk-basic.md) | [github-actions-sca-snyk.yml](github-actions-sca-snyk.yml) | [gitlab-ci-sca-snyk.yml](gitlab-ci-sca-snyk.yml) |
-| DAST (ZAP) | [dast-zap-basic.sh](dast-zap-basic.sh) | [dast-zap-basic.md](dast-zap-basic.md) | [github-actions-dast-zap.yml](github-actions-dast-zap.yml) | [gitlab-ci-dast-zap.yml](gitlab-ci-dast-zap.yml) |
-| DAST (Nuclei) | [dast-nuclei-basic.sh](dast-nuclei-basic.sh) | [dast-nuclei-basic.md](dast-nuclei-basic.md) | [github-actions-dast-nuclei.yml](github-actions-dast-nuclei.yml) | [gitlab-ci-dast-nuclei.yml](gitlab-ci-dast-nuclei.yml) |
-| DAST (Dastardly) | [dast-dastardly-basic.sh](dast-dastardly-basic.sh) | [dast-dastardly-basic.md](dast-dastardly-basic.md) | [github-actions-dast-dastardly.yml](github-actions-dast-dastardly.yml) | [gitlab-ci-dast-dastardly.yml](gitlab-ci-dast-dastardly.yml) |
-| PR review (LLM, advisory) | — | [pr-llm-security-review.md](pr-llm-security-review.md) | [diff](github-actions-pr-llm-security-review.yml) · [findings](github-actions-pr-llm-security-review-findings.yml) | — |
+| SAST | [sast-semgrep-opengrep-basic.sh](../../runbooks/appsec/sast-semgrep-opengrep-basic.sh) | [sast-semgrep-opengrep-basic.md](../../runbooks/appsec/sast-semgrep-opengrep-basic.md) | [github-actions-sast.yml](../../runbooks/appsec/github-actions-sast.yml) | [gitlab-ci-sast.yml](../../runbooks/appsec/gitlab-ci-sast.yml) |
+| SAST (Snyk Code) | [sast-snyk-code-basic.sh](../../runbooks/appsec/sast-snyk-code-basic.sh) | [sast-snyk-code-basic.md](../../runbooks/appsec/sast-snyk-code-basic.md) | [github-actions-sast-snyk.yml](../../runbooks/appsec/github-actions-sast-snyk.yml) | [gitlab-ci-sast-snyk.yml](../../runbooks/appsec/gitlab-ci-sast-snyk.yml) |
+| Secrets | [secrets-trufflehog-basic.sh](../../runbooks/appsec/secrets-trufflehog-basic.sh) | [secrets-trufflehog-basic.md](../../runbooks/appsec/secrets-trufflehog-basic.md) | [github-actions-secrets-trufflehog.yml](../../runbooks/appsec/github-actions-secrets-trufflehog.yml) | [gitlab-ci-secrets-trufflehog.yml](../../runbooks/appsec/gitlab-ci-secrets-trufflehog.yml) |
+| SCA | [sca-trivy-basic.sh](../../runbooks/appsec/sca-trivy-basic.sh) | [sca-trivy-basic.md](../../runbooks/appsec/sca-trivy-basic.md) | [github-actions-sca-trivy.yml](../../runbooks/appsec/github-actions-sca-trivy.yml) | [gitlab-ci-sca-trivy.yml](../../runbooks/appsec/gitlab-ci-sca-trivy.yml) |
+| SCA (Snyk Open Source) | [sca-snyk-basic.sh](../../runbooks/appsec/sca-snyk-basic.sh) | [sca-snyk-basic.md](../../runbooks/appsec/sca-snyk-basic.md) | [github-actions-sca-snyk.yml](../../runbooks/appsec/github-actions-sca-snyk.yml) | [gitlab-ci-sca-snyk.yml](../../runbooks/appsec/gitlab-ci-sca-snyk.yml) |
+| DAST (ZAP) | [dast-zap-basic.sh](../../runbooks/appsec/dast-zap-basic.sh) | [dast-zap-basic.md](../../runbooks/appsec/dast-zap-basic.md) | [github-actions-dast-zap.yml](../../runbooks/appsec/github-actions-dast-zap.yml) | [gitlab-ci-dast-zap.yml](../../runbooks/appsec/gitlab-ci-dast-zap.yml) |
+| DAST (Nuclei) | [dast-nuclei-basic.sh](../../runbooks/appsec/dast-nuclei-basic.sh) | [dast-nuclei-basic.md](../../runbooks/appsec/dast-nuclei-basic.md) | [github-actions-dast-nuclei.yml](../../runbooks/appsec/github-actions-dast-nuclei.yml) | [gitlab-ci-dast-nuclei.yml](../../runbooks/appsec/gitlab-ci-dast-nuclei.yml) |
+| DAST (Dastardly) | [dast-dastardly-basic.sh](../../runbooks/appsec/dast-dastardly-basic.sh) | [dast-dastardly-basic.md](../../runbooks/appsec/dast-dastardly-basic.md) | [github-actions-dast-dastardly.yml](../../runbooks/appsec/github-actions-dast-dastardly.yml) | [gitlab-ci-dast-dastardly.yml](../../runbooks/appsec/gitlab-ci-dast-dastardly.yml) |
+| PR review (LLM, advisory) | — | [pr-llm-security-review.md](../../runbooks/appsec/pr-llm-security-review.md) | [diff](../../runbooks/appsec/github-actions-pr-llm-security-review.yml) · [findings](../../runbooks/appsec/github-actions-pr-llm-security-review-findings.yml) | — |
 
 **Local Docker tip:** From the host, use `http://host.docker.internal:<port>` as the scan target, not `http://localhost`, when the scanner runs inside a container.
 
@@ -190,7 +190,7 @@ Use the [implementation master checklist](program/implementation-master-checklis
 
 ## Quick links (all program assets)
 
-- [GitHub Actions: copy-paste setup](setup-github-actions.md)
+- [GitHub Actions: copy-paste setup](../../runbooks/appsec/setup-github-actions.md)
 - [Full-circle overview](appsec-program-full-circle.md)
 - [Policy baseline](framework/appsec-policy-baseline.md) · [Policy baseline — controls only](framework/appsec-policy-baseline-minified.md) · [Contextual policy enhancements](framework/appsec-policy-baseline-contextual-enhancements.md) (PII, PHI, PCI, etc.)
 - [Policy evidence mapping (YAML)](framework/policy-evidence-mapping.yaml)

@@ -74,6 +74,6 @@ LLM workflows: prompt files under `.github/` — [pr-llm-security-review.md](pr-
 
 ## 4. Related links
 
-- [Using these runbooks in your own repository](README.md#using-these-runbooks-in-your-own-repository) — checklist and golden-repo options  
-- [Scanner runbooks and CI templates](README.md#scanner-runbooks-and-ci-templates) — full table of `github-actions-*.yml` filenames  
+- [Using these runbooks in your own repository](../../policy/appsec/README.md#using-these-runbooks-in-your-own-repository) — checklist and golden-repo options  
+- [Scanner runbooks and CI templates](../../policy/appsec/README.md#scanner-runbooks-and-ci-templates) — full table of `github-actions-*.yml` filenames  
 - [Demo walkthrough](demo-github-security-ci-walkthrough.md) — vulnerable app + CI story (copy-based; see Path B)

@@ -2,7 +2,7 @@
 
 **Navigation:** For the recommended **user journey** (policy → phases → scanners → SAMM) and folder map, start at [`README.md`](README.md) in this directory.
 
-**Corporate Security → operating companies:** Program and phase documents here describe *process* (much of it still **draft**—see tone in this file and gaps below). **We will provide** updates as this bundle matures; once your organization **adopts** the customized baseline, **corporate policy** should treat the agreed controls as the minimum bar. **Runnable scanners** live beside the process docs as shell runbooks and CI YAML. Engineering teams read the phases that apply to them, pick controls **Corporate Security** has approved for their tier from the [scanner table](README.md#scanner-runbooks-and-ci-templates), then **copy** scripts and workflows into service repositories per [Using these runbooks in your own repository](README.md#using-these-runbooks-in-your-own-repository), or consume them from a [corporate golden repo](README.md#staying-current-with-upstream-runbooks). **Internal company teams** may also fork a **divisional golden template** as described there, provided they meet or exceed corporate minimums.
+**Corporate Security → operating companies:** Program and phase documents here describe *process* (much of it still **draft**—see tone in this file and gaps below). **We will provide** updates as this bundle matures; once your organization **adopts** the customized baseline, **corporate policy** should treat the agreed controls as the minimum bar. **Runnable scanners** live under [`runbooks/appsec/`](../../runbooks/appsec/) in this repository (shell runbooks and CI YAML). Engineering teams read the phases that apply to them, pick controls **Corporate Security** has approved for their tier from the [scanner table](README.md#scanner-runbooks-and-ci-templates), then **copy** scripts and workflows into service repositories per [Using these runbooks in your own repository](README.md#using-these-runbooks-in-your-own-repository), or consume them from a [corporate golden repo](README.md#staying-current-with-upstream-runbooks). **Internal company teams** may also fork a **divisional golden template** as described there, provided they meet or exceed corporate minimums.
 
 ## Goal
 Define a practical end-to-end application security program that can start simple, run in CI/CD, and mature over time without blocking delivery.
@@ -24,9 +24,9 @@ This repository does not replace OWASP SAMM. It implements the local "how" while
 Use SAMM to assess and prioritize maturity improvements. Use these docs/runbooks to execute those improvements.
 
 Policy-driven implementation references:
-- `runbooks/appsec/framework/appsec-policy-baseline.md`
-- `runbooks/appsec/framework/policy-evidence-mapping.yaml`
-- `runbooks/appsec/program/implementation-master-checklist.md`
+- `policy/appsec/framework/appsec-policy-baseline.md`
+- `policy/appsec/framework/policy-evidence-mapping.yaml`
+- `policy/appsec/program/implementation-master-checklist.md`
 
 ## Program Outcomes
 - Prevent high-risk vulnerabilities from reaching production
@@ -42,7 +42,7 @@ Policy-driven implementation references:
 - Threat modeling for critical flows (auth, payment, admin, data export)
 - Data classification and trust boundary mapping
 - Secure architecture review for major changes
-- Detailed phase guide: `runbooks/appsec/program/01-plan-and-design.md`
+- Detailed phase guide: `policy/appsec/program/01-plan-and-design.md`
 
 ## Plan and Design Tooling Options
 
@@ -106,38 +106,38 @@ Policy-driven implementation references:
 - Pre-commit checks (optional, fast feedback)
 - SAST and secrets scanning in pull requests
 - Dependency policy checks (license + vulnerable packages)
-- Detailed phase guide: `runbooks/appsec/program/02-build-and-commit.md`
+- Detailed phase guide: `policy/appsec/program/02-build-and-commit.md`
 
 ### 3) CI Gate
 - Required checks: SAST, secrets, SCA, baseline DAST
 - Optional deeper checks: heavy/less stable DAST, full active scanning
 - Artifact retention for reports and audit trails
 - Severity-based fail policy with exceptions process
-- Detailed phase guide: `runbooks/appsec/program/03-ci-gate.md`
+- Detailed phase guide: `policy/appsec/program/03-ci-gate.md`
 
 ### 4) Release and Deploy
 - Container/image scanning
 - IaC misconfiguration scanning
 - SBOM generation and storage
 - Provenance/attestation (where possible)
-- Detailed phase guide: `runbooks/appsec/program/04-release-and-deploy.md`
+- Detailed phase guide: `policy/appsec/program/04-release-and-deploy.md`
 
 ### 5) Runtime and Operate
 - Continuous external attack surface scanning
 - Cloud/Kubernetes posture monitoring
 - Runtime alerting and incident response playbooks
 - Vulnerability SLAs and re-scan cadence
-- Detailed phase guide: `runbooks/appsec/program/05-runtime-and-operate.md`
+- Detailed phase guide: `policy/appsec/program/05-runtime-and-operate.md`
 
 ### 6) Improve and Govern
 - Metrics and KPIs (MTTR, open high/critical, false-positive rate)
 - Security champions and training
 - Quarterly control review and tuning
 - Exception review with expiry and ownership
-- Detailed phase guide: `runbooks/appsec/program/06-improve-and-govern.md`
+- Detailed phase guide: `policy/appsec/program/06-improve-and-govern.md`
 
 ## OWASP SAMM Alignment (High-Level)
-Reference explainer: `runbooks/appsec/program/framework-owasp-samm.md`
+Reference explainer: `policy/appsec/program/framework-owasp-samm.md`
 
 Mapping intent:
 - Governance:
