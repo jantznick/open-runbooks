@@ -203,8 +203,8 @@ Mapping intent:
 ## Known Gaps (Documented for Next Iterations)
 
 ### Governance and Process Gaps
-- Threat modeling runbook/template
-- Risk acceptance/exception workflow runbook
+- Threat modeling and exception **templates** ship under `policy/appsec/templates/`; orgs still need adoption in registry/ticketing
+- Risk acceptance workflow automation (exception expiry in CI/release gates)
 - Vulnerability triage and SLA matrix
 - Security sign-off criteria per release type
 
@@ -243,7 +243,7 @@ Mapping intent:
 ### Milestone 1 (Short Term)
 - Add IaC scanning runbook
 - Add container image scan runbook
-- Standardize severity gates in one policy table
+- Wire CI to [`framework/severity-policy.yaml`](framework/severity-policy.yaml) (published; implement in pipelines)
 
 ### Milestone 2 (Mid Term)
 - Add threat model template + review process

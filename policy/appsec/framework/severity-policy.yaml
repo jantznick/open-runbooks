@@ -1,0 +1,125 @@
+version: "1.0"
+title: "AppSec Severity and Gate Policy"
+description: >
+  Canonical severity scale, CI merge/release gate behavior, and remediation SLAs
+  by risk_tier. Customize placeholders before publishing as corporate policy.
+  Human-readable guide: severity-policy.md
+
+# Normalize vendor severities to these IDs in CI, dashboards, and tickets.
+severity_scale:
+  - id: critical
+    display_name: Critical
+    aliases: [CRITICAL, Blocker, P0]
+    description: Exploitable or imminent severe impact; fix before merge or release unless approved exception.
+  - id: high
+    display_name: High
+    aliases: [HIGH, Major, P1]
+    description: Serious weakness; remediate within SLA; may block merge per risk_tier.
+  - id: medium
+    display_name: Medium
+    aliases: [MEDIUM, Moderate, P2]
+    description: Material issue; track to closure; default warn in CI unless tier requires block.
+  - id: low
+    display_name: Low
+    aliases: [LOW, Minor, P3]
+    description: Limited impact; fix in normal backlog.
+  - id: info
+    display_name: Informational
+    aliases: [INFO, Note, Informational]
+    description: Hardening or hygiene; no merge block.
+
+gate_actions:
+  block_merge: "CI or release gate fails; merge/deploy blocked until fixed or exception."
+  warn: "Pipeline succeeds with warning; ticket required per triage rules."
+  log_only: "Recorded for metrics; no gate action."
+
+# Special cases that override tier tables when matched.
+overrides:
+  - id: verified_secret
+    applies_to: [secrets]
+    condition: "verified live credential in repository or artifact"
+    gate_action: block_merge
+    note: "Rotate and revoke first; exception only with compensating controls and expiry."
+
+# Default CI behavior by application risk_tier (registry field risk_tier).
+# Stricter than these defaults is always allowed. Weaker requires exception (AS-GOV-001).
+risk_tier_profiles:
+  high:
+    ci_gate:
+      block_on: [critical, high]
+      warn_on: [medium]
+      log_only: [low, info]
+    remediation_sla_days:
+      critical: 7
+      high: 30
+      medium: 90
+      low: null
+    triage_ticket_within_business_days:
+      critical: 1
+      high: 2
+  medium:
+    ci_gate:
+      block_on: [critical, high]
+      warn_on: [medium]
+      log_only: [low, info]
+    remediation_sla_days:
+      critical: 14
+      high: 60
+      medium: 120
+      low: null
+    triage_ticket_within_business_days:
+      critical: 1
+      high: 2
+  low:
+    ci_gate:
+      block_on: [critical]
+      warn_on: [high, medium]
+      log_only: [low, info]
+    remediation_sla_days:
+      critical: 30
+      high: 90
+      medium: null
+      low: null
+    triage_ticket_within_business_days:
+      critical: 2
+      high: 5
+
+# Map scanner-native severities to canonical ids (extend per tool in use).
+tool_normalization:
+  semgrep:
+    ERROR: critical
+    WARNING: medium
+    INFO: info
+  trivy:
+    CRITICAL: critical
+    HIGH: high
+    MEDIUM: medium
+    LOW: low
+    UNKNOWN: medium
+  snyk:
+    critical: critical
+    high: high
+    medium: medium
+    low: low
+  generic_cvss:
+    # Optional: map CVSS score ranges when tools only provide score
+    "9.0-10.0": critical
+    "7.0-8.9": high
+    "4.0-6.9": medium
+    "0.1-3.9": low
+
+policy_rules:
+  - id: STRICTER_ALLOWED
+    rule: "Teams MAY enforce stricter block_on lists than their risk_tier profile."
+  - id: WEAKER_REQUIRES_EXCEPTION
+    rule: "Failing to block on severities required for the tier requires approved exception (AS-GOV-001)."
+  - id: PRODUCTION_WITH_ACTIVE_EXCEPTION
+    rule: "Release MUST NOT rely on expired exception; reference exception ID in release record when waiving a gate."
+
+evidence:
+  policy_control: "Enforce severity thresholds"
+  automation_id: AS-CI-005
+  artifact_types:
+    - policy_threshold_config
+    - ci_enforcement_record
+    - exception_record_optional

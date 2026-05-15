@@ -30,7 +30,7 @@ Run AppSec as a measurable program with clear accountability, continuous tuning,
 ## Minimum Viable Process
 - Monthly AppSec metrics review
 - Quarterly control/rule tuning review
-- Exception register with owner + expiry mandatory
+- Exception register with owner + expiry mandatory ([`../templates/exception-request-form.md`](../templates/exception-request-form.md))
 
 ## Common Pitfalls
 - Tracking findings volume but not remediation quality

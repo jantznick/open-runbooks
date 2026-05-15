@@ -9,6 +9,12 @@ Each control below includes a **short requirement** (MUST/SHOULD) plus **actiona
 
 **Quick reference:** Minified requirements and actions only (no tables)—[`appsec-policy-baseline-minified.md`](appsec-policy-baseline-minified.md).
 
+**Program templates:** Risk tier, data classification, threat model, ADR, PR checklist, exception form, release sign-off—[`../templates/`](../templates/).
+
+**Severity and CI gates:** Canonical thresholds and SLAs—[`severity-policy.md`](severity-policy.md) · [`severity-policy.yaml`](severity-policy.yaml).
+
+**Glossary:** [`../glossary.md`](../glossary.md).
+
 **Optional extensions:** Recommendations by context (PII, health, payments, SaaS, AI, etc.)—[`appsec-policy-baseline-contextual-enhancements.md`](appsec-policy-baseline-contextual-enhancements.md).
 
 ## Reference Standards
@@ -34,11 +40,14 @@ This policy is aligned to commonly accepted best practices:
 Escalation path and ticketing system are organization-specific—document yours in an internal appendix or runbook.
 
 ## Definitions
+
+Key terms used in this baseline. Extended definitions: [`../glossary.md`](../glossary.md).
+
 - **Application:** A deployable unit with its own lifecycle, repository(ies), and business purpose.
 - **Production release:** A change promoted to an environment used by end users of the application.
 - **High-impact change:** Changes to authentication, authorization, data handling, trust boundaries, or public exposure.
 - **Approved exception:** Time-bound, documented deviation from a MUST control with owner, business justification, and expiry—see **Exception content and approval** below.
-- **Risk tier:** `low` | `medium` | `high` drives scan strictness, review depth, and SLA expectations—see **Risk tier and review cadence** below.
+- **Risk tier:** `low` | `medium` | `high` drives scan strictness, review depth, and SLA expectations—see **Risk tier and review cadence** and [`severity-policy.md`](severity-policy.md).
 
 ## Control statements
 
@@ -191,7 +200,7 @@ Optional fields (`runtime_environment`, `auth_model`, `compliance_tags`, `custom
 |--|--|
 | **Applies to** | All gated scan types (SAST, secrets, SCA, DAST as enabled). |
 | **Primary owner** | AppSec defines defaults; engineering implements in CI. |
-| **Actions** | (1) Publish a severity matrix by risk tier (see **Baseline Severity Policy**). (2) Configure pipelines to fail on blocker findings. (3) Route exceptions through **Exception content and approval** and record exception reference in CI or release notes when used. |
+| **Actions** | (1) Publish a severity matrix by risk tier (see [`severity-policy.md`](severity-policy.md)). (2) Configure pipelines to fail on blocker findings. (3) Route exceptions through **Exception content and approval** and record exception reference in CI or release notes when used. |
 | **Evidence** | Layer 2: `policy_threshold_config`, `ci_enforcement_record`, optional `exception_record`. |
 | **Done when** | No production release bypasses documented gates without an active approved exception. |
 
@@ -254,7 +263,7 @@ Optional fields (`runtime_environment`, `auth_model`, `compliance_tags`, `custom
 |--|--|
 | **Applies to** | All findings from mandated scans and critical manual findings. |
 | **Primary owner** | Engineering (fix); AppSec (severity disputes, exceptions). |
-| **Actions** | (1) Create tickets for blocker/high findings within **[e.g. 1–2]** business days. (2) Apply SLAs by severity and risk tier (define table internally). (3) Record closure or exception before SLA breach escalation. |
+| **Actions** | (1) Create tickets for blocker/high findings within **[e.g. 1–2]** business days. (2) Apply SLAs by severity and risk tier ([`severity-policy.yaml`](severity-policy.yaml)). (3) Record closure or exception before SLA breach escalation. |
 | **Evidence** | Layer 2: `ticket_reference`, `sla_state`, `closure_record`. |
 | **Done when** | No untriaged critical/high findings past SLA without approved risk decision. |
 
@@ -286,20 +295,11 @@ Optional fields (`runtime_environment`, `auth_model`, `compliance_tags`, `custom
 
 ---
 
-## Baseline severity policy (template)
-- **Blocker severities (default):** Critical, High  
-- **Warning severities (default):** Medium  
-- **Informational:** Low / Info  
+## Severity and CI gates
 
-Teams MAY adopt **stricter** thresholds by `risk_tier`. **Weaker** thresholds (e.g. not failing on High) require the **Exception content and approval** process with business sign-off.
+Normative thresholds, merge-block rules, remediation SLAs, and tool normalization live in **[`severity-policy.md`](severity-policy.md)** (readable) and **[`severity-policy.yaml`](severity-policy.yaml)** (automation). Do not duplicate severity tables in team runbooks—reference or generate from those files.
 
-**Example (customize):**
-
-| Risk tier | Block merge on | Time to fix High (target SLA) |
-|-----------|----------------|-------------------------------|
-| High | Critical, High | **[e.g. 30 days]** |
-| Medium | Critical, High (Medium warn) | **[e.g. 60 days]** |
-| Low | Critical (High per exception) | **[e.g. 90 days]** |
+Summary: by default, **Critical** and **High** block merge for `medium` and `high` tier apps; **Low** tier blocks **Critical** only; **verified secrets** always block. Weaker gates require an approved exception.
 
 ---
 

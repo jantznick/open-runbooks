@@ -28,14 +28,16 @@ Build security in before code is written by defining requirements, architecture 
 - Threat modeling and diagrams:
   - OWASP Threat Dragon
   - Draw.io / Mermaid diagrams in-repo
+  - Template: [`../templates/threat-model-template.md`](../templates/threat-model-template.md)
 - Requirement baselines:
   - OWASP ASVS
   - NIST SSDF mapping
+  - [`../templates/data-classification-scheme.md`](../templates/data-classification-scheme.md), [`../templates/risk-tier-rubric.md`](../templates/risk-tier-rubric.md)
 - Workflow and review:
   - GitHub/Jira security design review templates
-  - PR-level security impact checklist
+  - PR-level security impact checklist: [`../templates/pr-security-checklist.md`](../templates/pr-security-checklist.md)
 - Decision tracking:
-  - ADRs with "Security Implications" section
+  - ADRs with "Security Implications" section: [`../templates/adr-template.md`](../templates/adr-template.md)
 
 ## Minimum Viable Process
 - Create one threat model per critical feature

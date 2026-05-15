@@ -41,6 +41,7 @@ Scanner jobs in this program are implemented as **shell runbooks** plus optional
   - Dastardly (until runner stability is proven)
 
 ## Minimum Viable Process
+- Severity gates match app `risk_tier` per [`../framework/severity-policy.md`](../framework/severity-policy.md)
 - Required checks must pass for merge
 - All scanners upload artifacts on success/failure
 - Exception process documented with owner and expiry

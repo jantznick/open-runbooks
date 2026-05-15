@@ -5,6 +5,8 @@ Provide a practical, local reference to OWASP SAMM so this repo's runbooks can b
 
 This document is a working guide, not an official SAMM specification.
 
+**Glossary:** Shared terms (SAMM, evidence, risk tier, CI gate, etc.)—[`../glossary.md`](../glossary.md).
+
 ## What OWASP SAMM Is
 OWASP SAMM (Software Assurance Maturity Model) is a framework for:
 - assessing current AppSec maturity
@@ -24,6 +26,7 @@ Use both together:
 4. track progress using [`samm-coverage-checklist.md`](samm-coverage-checklist.md).
 5. enforce policy controls using:
    - [`../framework/appsec-policy-baseline.md`](../framework/appsec-policy-baseline.md)
+   - [`../framework/severity-policy.yaml`](../framework/severity-policy.yaml)
    - [`../framework/policy-evidence-mapping.yaml`](../framework/policy-evidence-mapping.yaml)
 
 ## SAMM Building Blocks (Practical View)

@@ -6,6 +6,7 @@ Track current and target SAMM coverage using practical, auditable checklist item
 Use this with:
 - [`framework-owasp-samm.md`](framework-owasp-samm.md)
 - [`../appsec-program-full-circle.md`](../appsec-program-full-circle.md)
+- [`../glossary.md`](../glossary.md)
 
 ## How to Use
 - Mark status for each checklist item:

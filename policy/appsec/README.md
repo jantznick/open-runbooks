@@ -179,7 +179,6 @@ These are **documented but not fully implemented** as first-class runbooks or or
 | **Container image scanning** (distinct from filesystem SCA) | Artifact trust | Same |
 | **SBOM + provenance** | Supply chain / audit | Same + [04-release-and-deploy.md](program/04-release-and-deploy.md) |
 | **Single combined “baseline” pipeline** | One job graph per repo | Backlog; compose from existing YAML |
-| **Threat model / ADR / exception templates** | Design & governance evidence | [01](program/01-plan-and-design.md), [implementation checklist](program/implementation-master-checklist.md) |
 | **Training / champions package** | SAMM Governance depth | [Future components](appsec-program-full-circle.md) |
 | **Central findings aggregation** | One view across tools | Not in repo; your metadata platform |
 | **Risk-tier profiles** (core vs regulated) | Policy variants | Extend `framework/` with profile overlays when ready |
@@ -190,9 +189,11 @@ Use the [implementation master checklist](program/implementation-master-checklis
 
 ## Quick links (all program assets)
 
+- [Program templates](templates/) — risk tier, data classification, threat model, ADR, PR checklist, exception form, release sign-off
 - [GitHub Actions: copy-paste setup](../../runbooks/appsec/setup-github-actions.md)
 - [Full-circle overview](appsec-program-full-circle.md)
-- [Policy baseline](framework/appsec-policy-baseline.md) · [Policy baseline — controls only](framework/appsec-policy-baseline-minified.md) · [Contextual policy enhancements](framework/appsec-policy-baseline-contextual-enhancements.md) (PII, PHI, PCI, etc.)
+- [Policy baseline](framework/appsec-policy-baseline.md) · [Severity policy](framework/severity-policy.md) · [Glossary](glossary.md)
+- [Policy baseline — controls only](framework/appsec-policy-baseline-minified.md) · [Contextual policy enhancements](framework/appsec-policy-baseline-contextual-enhancements.md) (PII, PHI, PCI, etc.)
 - [Policy evidence mapping (YAML)](framework/policy-evidence-mapping.yaml)
 - [SAMM reference](program/framework-owasp-samm.md)
 - [SAMM coverage checklist](program/samm-coverage-checklist.md)

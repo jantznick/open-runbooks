@@ -107,12 +107,13 @@ controls:
     applies_when: "all_applications"
     required_metadata:
       - risk_tier
+    policy_reference: "framework/severity-policy.yaml"
     evidence_types:
       - policy_threshold_config
       - ci_enforcement_record
       - exception_record_optional
     cadence: "continuous"
-    pass_criteria: "build fails on configured severities unless approved exception exists"
+    pass_criteria: "build fails on severities defined in severity-policy.yaml for app risk_tier unless approved exception exists"
 
   - id: AS-REL-001
     title: Release security evidence bundle

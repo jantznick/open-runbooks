@@ -145,7 +145,9 @@ When you handle **sensitive** or **regulated** data in applications, consider st
 
 ## Related documents
 - [AppSec policy baseline](appsec-policy-baseline.md) — minimum AppSec controls.
+- [Severity and CI gate policy](severity-policy.md) — thresholds and SLAs by risk tier.
 - [AppSec policy baseline — minified](appsec-policy-baseline-minified.md) — requirements and actions only.
+- [Glossary](../glossary.md) — shared terminology.
 - [Policy evidence mapping](policy-evidence-mapping.yaml) — automation template.
 
 ---

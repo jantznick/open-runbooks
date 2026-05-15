@@ -35,6 +35,7 @@ Ensure deployable artifacts and deployment configurations are security-validated
 - Every release artifact has vulnerability scan evidence
 - Critical/high release blockers are explicit
 - SBOM generated and stored per release
+- Release sign-off recorded: [`../templates/release-sign-off-checklist.md`](../templates/release-sign-off-checklist.md)
 
 ## Common Pitfalls
 - Scanning source only but not release artifact

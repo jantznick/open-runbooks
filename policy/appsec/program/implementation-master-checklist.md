@@ -52,7 +52,7 @@ When workstreams need **concrete CI controls** in service repositories, point en
   - Owner:
   - Target:
   - Evidence:
-- [ ] Finalize severity thresholds and fail criteria
+- [ ] Finalize severity thresholds and fail criteria ([`framework/severity-policy.yaml`](../framework/severity-policy.yaml))
   - Owner:
   - Target:
   - Evidence:

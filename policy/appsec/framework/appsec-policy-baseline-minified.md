@@ -1,6 +1,6 @@
 # AppSec Policy Baseline — Controls only (minified)
 
-Normative **requirements** and **actions** only. For scope, roles, definitions, metadata registry, evidence tables, severity examples, retention, and Layer 2 mapping, see [`appsec-policy-baseline.md`](appsec-policy-baseline.md).
+Normative **requirements** and **actions** only. For scope, roles, definitions, metadata registry, evidence tables, retention, and Layer 2 mapping, see [`appsec-policy-baseline.md`](appsec-policy-baseline.md). Severity gates and SLAs: [`severity-policy.md`](severity-policy.md). Terms: [`../glossary.md`](../glossary.md).
 
 ---
 
@@ -97,7 +97,7 @@ Normative **requirements** and **actions** only. For scope, roles, definitions, 
 ### D5: Enforce severity thresholds
 - **Requirement:** Builds MUST fail on policy-defined severity thresholds (unless approved exception exists).
 - **Actions:**
-  1. Publish a severity matrix by risk tier (see full baseline **Baseline severity policy**).
+  1. Publish a severity matrix by risk tier (see [`severity-policy.md`](severity-policy.md)).
   2. Configure pipelines to fail on blocker findings.
   3. Route exceptions through **Exception content and approval** and record exception reference in CI or release notes when used.
 
