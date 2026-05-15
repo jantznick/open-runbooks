@@ -45,7 +45,7 @@
 **Threat model / ADR (if yes to #1, #2, or #3 on medium/high tier apps):**
 
 - [ ] Existing threat model still valid  
-- [ ] Threat model updated — link:  
+- [ ] Threat model updated — link (catalog record or doc):  
 - [ ] ADR filed — link:  
 
 ---

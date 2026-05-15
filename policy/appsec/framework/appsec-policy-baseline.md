@@ -117,7 +117,7 @@ Optional fields (`runtime_environment`, `auth_model`, `compliance_tags`, `custom
 |--|--|
 | **Applies to** | `internet_facing == true` OR `risk_tier` in (`medium`, `high`) for the relevant scope—align with Layer 2 `applies_when` for automation. |
 | **Primary owner** | Engineering; AppSec may facilitate or review. |
-| **Actions** | (1) Produce a lightweight model (e.g. data-flow diagram + STRIDE notes) covering trust boundaries and critical flows. (2) Link mitigations to tickets or designs. (3) Revisit when boundaries change (new integrations, auth changes, new data classes). |
+| **Actions** | (1) Produce a lightweight model using the [catalog lite threat model](../templates/threat-model-catalog-lite.md) (STRIDE + trust boundaries; diagram optional via URL). (2) Link mitigations to tickets or designs. (3) Revisit when boundaries change (new integrations, auth changes, new data classes). |
 | **Evidence** | Layer 2: `threat_model_document`, `design_review_record`; approval recorded per org process. |
 | **Done when** | Layer 2 pass criteria met for the release scope: approved threat model on file for the change being released. |
 

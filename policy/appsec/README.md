@@ -192,7 +192,7 @@ Use the [implementation master checklist](program/implementation-master-checklis
 ## Quick links (all program assets)
 
 - [Policy ↔ process alignment](policy-process-alignment.md) — crosswalk and assurance between policy and phases 01–06
-- [Program templates](templates/) — risk tier, data classification, threat model, ADR, PR checklist, exception form, release sign-off
+- [Program templates](templates/) — risk tier, data classification, [threat model (catalog lite)](templates/threat-model-catalog-lite.md), ADR, PR checklist, exception form, release sign-off
 - [GitHub Actions: copy-paste setup](../../runbooks/appsec/setup-github-actions.md)
 - [Full-circle overview](appsec-program-full-circle.md)
 - [Policy baseline](framework/appsec-policy-baseline.md) · [Severity policy](framework/severity-policy.md) · [Glossary](glossary.md)

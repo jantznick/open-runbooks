@@ -27,10 +27,9 @@ Build security in before code is written by defining requirements, architecture 
 - Run architecture security review before implementation
 
 ## Suggested Tooling
-- Threat modeling and diagrams:
-  - OWASP Threat Dragon
-  - Draw.io / Mermaid diagrams in-repo
-  - Template: [`../templates/threat-model-template.md`](../templates/threat-model-template.md)
+- Threat modeling:
+  - **Catalog / form (default):** [`../templates/threat-model-catalog-lite.md`](../templates/threat-model-catalog-lite.md) + [`../templates/threat-model-catalog-schema.yaml`](../templates/threat-model-catalog-schema.yaml)
+  - **Optional depth:** [`../templates/threat-model-template-full.md`](../templates/threat-model-template-full.md) (diagrams, Threat Dragon export via URL only)
 - Requirement baselines:
   - OWASP ASVS
   - NIST SSDF mapping

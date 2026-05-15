@@ -44,11 +44,13 @@ controls:
     required_metadata:
       - risk_tier
       - internet_facing
+    policy_reference: "templates/threat-model-catalog-lite.md"
+    catalog_schema: "templates/threat-model-catalog-schema.yaml"
     evidence_types:
       - threat_model_document
       - design_review_record
     cadence: "per major change"
-    pass_criteria: "approved threat model exists for scoped release"
+    pass_criteria: "approved threat model exists for scoped release (catalog lite JSON or equivalent; diagram optional)"
 
   - id: AS-CI-001
     title: SAST required in CI

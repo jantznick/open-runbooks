@@ -50,8 +50,8 @@ Policy-driven implementation references:
 
 ### Minimum Viable Stack (Fast to Adopt)
 - Threat modeling:
-  - OWASP Threat Dragon or Draw.io/Mermaid diagrams in-repo
-  - STRIDE-lite checklist per critical feature
+  - [Catalog lite form](templates/threat-model-catalog-lite.md) in inventory (STRIDE six-pack + trust boundaries; optional `diagram_url` only)
+  - STRIDE-lite per critical feature; Threat Dragon **not** required
 - Security requirements baseline:
   - OWASP ASVS (selected controls per app type)
   - Simple "security acceptance criteria" section in tickets/PRs

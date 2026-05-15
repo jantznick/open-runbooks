@@ -1,0 +1,209 @@
+# Threat model — catalog / form schema (template)
+# Use this to build a web form or inventory API. Human-readable form: threat-model-catalog-lite.md
+# Full narrative template (optional): threat-model-template-full.md
+
+version: "1.0"
+title: Threat model catalog record
+description: >
+  Flat, form-friendly threat model for application inventory/catalog storage.
+  Satisfies policy control B2 / evidence threat_model_document when status is approved.
+  No Threat Dragon or diagram required; optional diagram_url only.
+
+# Align with policy-evidence-mapping.yaml metadata_contract where noted.
+record:
+  type: object
+  required:
+    - app_id
+    - scope_title
+    - scope_summary
+    - risk_tier
+    - internet_facing
+    - data_classification
+    - status
+    - author
+    - stride
+    - approval
+  properties:
+    app_id:
+      type: string
+      description: Registry application identifier
+    app_name:
+      type: string
+    scope_title:
+      type: string
+      maxLength: 120
+      description: Short name for this change (feature, release, epic)
+    scope_summary:
+      type: string
+      maxLength: 500
+      description: What is being built or changed; who uses it
+    risk_tier:
+      type: string
+      enum: [low, medium, high]
+    internet_facing:
+      type: boolean
+    data_classification:
+      type: string
+      enum: [public, internal, confidential, regulated]
+    author:
+      type: string
+    reviewers:
+      type: array
+      items: { type: string }
+    status:
+      type: string
+      enum: [draft, in_review, approved, superseded]
+    version_date:
+      type: string
+      format: date
+    ticket_url:
+      type: string
+      format: uri
+    in_scope:
+      type: string
+      maxLength: 300
+    out_of_scope:
+      type: string
+      maxLength: 300
+    diagram_url:
+      type: string
+      format: uri
+      description: Optional link to diagram image or external doc; not required
+
+    actors:
+      type: array
+      items:
+        type: string
+        enum:
+          - end_user
+          - privileged_user
+          - api_client
+          - partner_integration
+          - internal_service
+          - administrator
+
+    data_types_handled:
+      type: array
+      items:
+        type: string
+        enum:
+          - none_sensitive
+          - credentials
+          - pii
+          - payment
+          - health
+          - other_regulated
+
+    trust_boundaries:
+      type: array
+      minItems: 1
+      maxItems: 8
+      items:
+        type: object
+        required: [name, boundary_type]
+        properties:
+          name:
+            type: string
+            maxLength: 80
+            description: e.g. Browser to API, API to database
+          boundary_type:
+            type: string
+            enum:
+              - user_to_system
+              - system_to_datastore
+              - system_to_third_party
+              - internal_service_to_service
+              - other
+          notes:
+            type: string
+            maxLength: 200
+
+    # One row per STRIDE letter — enough for policy; expand in full template if needed
+    stride:
+      type: object
+      required: [spoofing, tampering, repudiation, information_disclosure, denial_of_service, elevation_of_privilege]
+      properties:
+        spoofing:
+          $ref: "#/definitions/stride_item"
+        tampering:
+          $ref: "#/definitions/stride_item"
+        repudiation:
+          $ref: "#/definitions/stride_item"
+        information_disclosure:
+          $ref: "#/definitions/stride_item"
+        denial_of_service:
+          $ref: "#/definitions/stride_item"
+        elevation_of_privilege:
+          $ref: "#/definitions/stride_item"
+
+    top_risks:
+      type: array
+      maxItems: 5
+      items:
+        type: object
+        properties:
+          summary: { type: string, maxLength: 200 }
+          likelihood: { type: string, enum: [low, medium, high] }
+          impact: { type: string, enum: [low, medium, high] }
+          mitigation: { type: string, maxLength: 200 }
+          status: { type: string, enum: [open, mitigated, accepted] }
+          ticket_url: { type: string, format: uri }
+
+    third_parties:
+      type: array
+      maxItems: 10
+      items:
+        type: object
+        properties:
+          name: { type: string }
+          purpose: { type: string, maxLength: 120 }
+          data_shared: { type: boolean }
+          reviewed: { type: boolean }
+
+    security_requirements:
+      type: array
+      maxItems: 8
+      items:
+        type: object
+        properties:
+          text: { type: string, maxLength: 200 }
+          verification: { type: string, enum: [manual_review, unit_test, sast, dast, other] }
+
+    approval:
+      type: object
+      required: [outcome]
+      properties:
+        engineering_lead: { type: string }
+        appsec_reviewer: { type: string }
+        approved_date: { type: string, format: date }
+        outcome:
+          type: string
+          enum: [approved, changes_required]
+        conditions:
+          type: string
+          maxLength: 300
+
+definitions:
+  stride_item:
+    type: object
+    required: [applies]
+    properties:
+      applies:
+        type: boolean
+        description: true if this threat category is relevant to scope
+      concern:
+        type: string
+        maxLength: 200
+        description: One sentence — what could go wrong (if applies)
+      mitigation:
+        type: string
+        maxLength: 200
+        description: One sentence — control or ticket (if applies)
+      ticket_url:
+        type: string
+        format: uri
+
+pass_criteria:
+  policy_control: B2
+  evidence_type: threat_model_document
+  met_when: "status == approved AND stride completed for all categories where applies==true has mitigation OR ticket_url"

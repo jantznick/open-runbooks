@@ -8,7 +8,9 @@ Reusable artifacts for governance, design, build, and release. Copy into your re
 |----------|----------|-------------------|
 | [risk-tier-rubric.md](risk-tier-rubric.md) | Registering or re-reviewing an application | Risk tier and review cadence; registry `risk_tier` |
 | [data-classification-scheme.md](data-classification-scheme.md) | Defining org-wide data labels | Metadata `data_classification`; contextual enhancements |
-| [threat-model-template.md](threat-model-template.md) | New services, major features, internet-facing or medium/high tier scope | Threat modeling; `threat_model_document` |
+| [threat-model-catalog-lite.md](threat-model-catalog-lite.md) (+ [schema](threat-model-catalog-schema.yaml)) | Catalog/inventory, web forms, JSON storage | Threat modeling; `threat_model_document` |
+| [threat-model-template.md](threat-model-template.md) | Index — lite vs full | Same |
+| [threat-model-template-full.md](threat-model-template-full.md) | Optional depth, diagrams | Same |
 | [adr-template.md](adr-template.md) | Architecture decisions with security impact | Security requirements; design review |
 | [pr-security-checklist.md](pr-security-checklist.md) | Every pull request (or security-sensitive PRs) | Security impact on pull requests |
 | [exception-request-form.md](exception-request-form.md) | Bypassing a MUST control or weaker severity gate | Exception governance (`AS-GOV-001`) |

@@ -72,12 +72,12 @@ Short, shared definitions for this repository’s policy, templates, and phase d
 
 **SSDF (NIST Secure Software Development Framework)** — Practices for secure software development; referenced alongside ASVS in policy.
 
-**STRIDE** — Threat-modeling mnemonic (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege). Used in [threat-model-template.md](templates/threat-model-template.md).
+**STRIDE** — Threat-modeling mnemonic (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege). Captured in six yes/no rows in [threat-model-catalog-lite.md](templates/threat-model-catalog-lite.md).
 
 ---
 
 ## T–Z
 
-**Threat modeling** — Structured analysis of assets, trust boundaries, and threats before or during implementation. Required for internet-facing and medium/high-tier scope per policy.
+**Threat modeling** — Structured analysis of assets, trust boundaries, and threats before or during implementation. Required for internet-facing and medium/high-tier scope per policy. Default artifact: [catalog lite](templates/threat-model-catalog-lite.md) (form/JSON in inventory)—not Threat Dragon.
 
 **Trust boundary** — Line where trust level changes (e.g. user browser → API, API → database). Documented in threat models and architecture diagrams.

@@ -52,7 +52,7 @@ What did we decide? State clearly — one or two paragraphs.
 | **Dependencies / supply chain** | New vendors or packages | |
 | **Exposure** | Internet-facing, new APIs, admin surfaces | |
 
-**Threat model:** Required? Yes / No — link: [threat-model-template.md](threat-model-template.md) instance or ticket
+**Threat model:** Required? Yes / No — link: [catalog lite](threat-model-catalog-lite.md) record or ticket
 
 **Security requirements / tickets:**
 
