@@ -1,5 +1,7 @@
 # AppSec Program: 03 CI Gate
 
+**Policy alignment:** Satisfies **D1–D5, F2**; exceptions per **EX** — see [policy-process-alignment.md](../policy-process-alignment.md#process-phase-to-policy).
+
 ## Objective
 Provide deterministic, auditable security quality gates before merge/release progression.
 

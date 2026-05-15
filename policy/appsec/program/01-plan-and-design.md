@@ -1,5 +1,7 @@
 # AppSec Program: 01 Plan and Design
 
+**Policy alignment:** Satisfies controls **A1, A2, B1, B2** — see [policy-process-alignment.md](../policy-process-alignment.md#process-phase-to-policy).
+
 ## Objective
 Build security in before code is written by defining requirements, architecture controls, and risk decisions early.
 

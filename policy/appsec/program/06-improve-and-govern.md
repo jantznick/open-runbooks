@@ -1,5 +1,7 @@
 # AppSec Program: 06 Improve and Govern
 
+**Policy alignment:** Sustains **A1, A2, D5, F2, EX**; policy review cadence — see [policy-process-alignment.md](../policy-process-alignment.md#process-phase-to-policy).
+
 ## Objective
 Run AppSec as a measurable program with clear accountability, continuous tuning, and policy governance.
 

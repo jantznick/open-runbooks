@@ -1,5 +1,7 @@
 # AppSec Program: 02 Build and Commit
 
+**Policy alignment:** Satisfies **C1, C2**; supports **D1–D3** — see [policy-process-alignment.md](../policy-process-alignment.md#process-phase-to-policy).
+
 ## Objective
 Catch issues as early as possible in developer workflows before CI and release.
 

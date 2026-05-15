@@ -2,6 +2,8 @@
 
 **Navigation:** For the recommended **user journey** (policy → phases → scanners → SAMM) and folder map, start at [`README.md`](README.md) in this directory.
 
+**Policy alignment:** This document is the **process** side of the program. The normative **policy** is [`framework/appsec-policy-baseline.md`](framework/appsec-policy-baseline.md). [**Policy and process alignment**](policy-process-alignment.md) shows how operating phases 01–06 satisfies policy controls (and where gaps remain).
+
 **Corporate Security → operating companies:** Program and phase documents here describe *process* (much of it still **draft**—see tone in this file and gaps below). **We will provide** updates as this bundle matures; once your organization **adopts** the customized baseline, **corporate policy** should treat the agreed controls as the minimum bar. **Runnable scanners** live under [`runbooks/appsec/`](../../runbooks/appsec/) in this repository (shell runbooks and CI YAML). Engineering teams read the phases that apply to them, pick controls **Corporate Security** has approved for their tier from the [scanner table](README.md#scanner-runbooks-and-ci-templates), then **copy** scripts and workflows into service repositories per [Using these runbooks in your own repository](README.md#using-these-runbooks-in-your-own-repository), or consume them from a [corporate golden repo](README.md#staying-current-with-upstream-runbooks). **Internal company teams** may also fork a **divisional golden template** as described there, provided they meet or exceed corporate minimums.
 
 ## Goal

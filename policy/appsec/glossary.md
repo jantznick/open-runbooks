@@ -44,6 +44,8 @@ Short, shared definitions for this repository’s policy, templates, and phase d
 
 **Layer 1 / Layer 2** — Layer 1 is normative policy (what you must do). Layer 2 is how you prove it (evidence types, pass criteria, registry fields). See [policy baseline](framework/appsec-policy-baseline.md) and [evidence mapping](framework/policy-evidence-mapping.yaml).
 
+**Policy and process alignment** — Crosswalk linking [policy baseline](framework/appsec-policy-baseline.md) controls to [full-circle](appsec-program-full-circle.md) phases 01–06. See [policy-process-alignment.md](policy-process-alignment.md).
+
 **Metadata registry / application catalog** — System of record for per-app fields (`risk_tier`, `data_classification`, `repo_url`, `ci_provider`, etc.). Used to scope controls and correlate CI evidence.
 
 **OWASP SAMM** — Software Assurance Maturity Model: a framework to assess and improve AppSec capabilities over time. This repo uses SAMM for maturity; phase docs and runbooks for implementation. See [framework-owasp-samm.md](program/framework-owasp-samm.md).

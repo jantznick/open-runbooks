@@ -15,6 +15,8 @@ Each control below includes a **short requirement** (MUST/SHOULD) plus **actiona
 
 **Glossary:** [`../glossary.md`](../glossary.md).
 
+**Process alignment:** How this policy maps to the full-circle program (phases 01–06)—[`../policy-process-alignment.md`](../policy-process-alignment.md).
+
 **Optional extensions:** Recommendations by context (PII, health, payments, SaaS, AI, etc.)—[`appsec-policy-baseline-contextual-enhancements.md`](appsec-policy-baseline-contextual-enhancements.md).
 
 ## Reference Standards

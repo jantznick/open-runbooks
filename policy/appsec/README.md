@@ -2,6 +2,8 @@
 
 This folder is an **AppSec program template**: policy, lifecycle playbooks, OWASP SAMM alignment, and runnable scanner runbooks. **Corporate Security** (or your centralized AppSec function) publishes this bundle to **operating companies and internal engineering teams** so everyone shares the same minimum bar and the same runnable controls. Use this file as the **main user flow**; the root repo [README](../../README.md) stays a short index.
 
+**Policy ↔ process:** The [policy baseline](framework/appsec-policy-baseline.md) states *what* is required; the [full-circle program](appsec-program-full-circle.md) and phases `01`–`06` describe *how* to operate. [**Policy and process alignment**](policy-process-alignment.md) maps them so following the program satisfies the policy (with documented gaps).
+
 **What we provide and how teams consume it**
 
 1. **Process and program docs** — We provide phases `01`–`06`, the [policy baseline](framework/appsec-policy-baseline.md), SAMM material, and the [full-circle overview](appsec-program-full-circle.md) so operating units know *what* corporate expects and how it fits together. Several assets are still **draft / in progress**; Corporate Security will refine them—teams should still treat them as **binding guidance** once your organization adopts them, subject to your exception process.
@@ -22,7 +24,7 @@ To show scans in Actions, follow **[demo-github-security-ci-walkthrough.md](../.
 | Role | Start with | Then |
 |------|------------|------|
 | **Corporate Security / central AppSec** | This page + [policy baseline](framework/appsec-policy-baseline.md) | Own the golden repo, policy interpretation, and reviewed rollouts to operating units |
-| **Sponsor / leadership** | [Program overview](appsec-program-full-circle.md) (outcomes, baseline, gaps) | [Policy baseline](framework/appsec-policy-baseline.md) (what corporate policy requires) |
+| **Sponsor / leadership** | [Program overview](appsec-program-full-circle.md) (outcomes, baseline, gaps) | [Policy ↔ process alignment](policy-process-alignment.md) · [Policy baseline](framework/appsec-policy-baseline.md) |
 | **AppSec / security program owner (BU or subsidiary)** | This page (journey below) | [Implementation master checklist](program/implementation-master-checklist.md) |
 | **Engineering lead / platform** | [03 CI Gate](program/03-ci-gate.md) + [scanner runbooks](#scanner-runbooks-and-ci-templates) | [Policy evidence mapping](framework/policy-evidence-mapping.yaml) (metadata integration) |
 | **Engineering teams (service repos)** | This page: [journey](#user-journey-running-the-program-recommended-order) + [copy/paste checklist](#using-these-runbooks-in-your-own-repository) | Per-control `*-basic.md` guides + YAML Corporate Security has approved for your tier |
@@ -189,6 +191,7 @@ Use the [implementation master checklist](program/implementation-master-checklis
 
 ## Quick links (all program assets)
 
+- [Policy ↔ process alignment](policy-process-alignment.md) — crosswalk and assurance between policy and phases 01–06
 - [Program templates](templates/) — risk tier, data classification, threat model, ADR, PR checklist, exception form, release sign-off
 - [GitHub Actions: copy-paste setup](../../runbooks/appsec/setup-github-actions.md)
 - [Full-circle overview](appsec-program-full-circle.md)

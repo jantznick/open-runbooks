@@ -1,5 +1,7 @@
 # AppSec Program: 04 Release and Deploy
 
+**Policy alignment:** Satisfies **E1**; **D4** pre-release; **E2/E3** (SHOULD) on roadmap — see [policy-process-alignment.md](../policy-process-alignment.md#process-phase-to-policy).
+
 ## Objective
 Ensure deployable artifacts and deployment configurations are security-validated before production.
 

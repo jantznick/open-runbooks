@@ -1,5 +1,7 @@
 # AppSec Program: 05 Runtime and Operate
 
+**Policy alignment:** Satisfies **F1, F2** — see [policy-process-alignment.md](../policy-process-alignment.md#process-phase-to-policy).
+
 ## Objective
 Continuously detect exposure and security drift in deployed environments and respond quickly.
 
