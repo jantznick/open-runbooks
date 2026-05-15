@@ -1,72 +1,91 @@
-# AppSec program — start here
+# Corporate application security program — documentation
 
-This folder is an **AppSec program template**: policy, lifecycle playbooks, OWASP SAMM alignment, and runnable scanner runbooks. **Corporate Security** (or your centralized AppSec function) publishes this bundle to **operating companies and internal engineering teams** so everyone shares the same minimum bar and the same runnable controls. Use this file as the **main user flow**; the root repo [README](../../README.md) stays a short index.
+This is the **documentation home** for the corporate application security (AppSec) program. It links **normative policy**, the **end-to-end operating model** (phases 01–06), **policy ↔ process alignment**, reference **CI controls**, and **standard forms**. Use it as the primary entry point when browsing this documentation set in a portal or catalog.
 
-**Policy ↔ process:** The [policy baseline](framework/appsec-policy-baseline.md) states *what* is required; the [full-circle program](appsec-program-full-circle.md) and phases `01`–`06` describe *how* to operate. [**Policy and process alignment**](policy-process-alignment.md) maps them so following the program satisfies the policy (with documented gaps).
+**Corporate Security** maintains this material for **operating companies and engineering**. **Subsidiary or divisional** security teams may tailor distribution paths while **meeting or exceeding** the corporate minimums described in the [policy baseline](framework/appsec-policy-baseline.md).
 
-**What we provide and how teams consume it**
-
-1. **Process and program docs** — We provide phases `01`–`06`, the [policy baseline](framework/appsec-policy-baseline.md), SAMM material, and the [full-circle overview](appsec-program-full-circle.md) so operating units know *what* corporate expects and how it fits together. Several assets are still **draft / in progress**; Corporate Security will refine them—teams should still treat them as **binding guidance** once your organization adopts them, subject to your exception process.
-2. **Runnable controls** — We provide each scanner as a **`.sh` runbook** (Docker-based, CI-agnostic) plus optional **`github-actions-*.yml`** / **`gitlab-ci-*.yml`** files that invoke those scripts from repo root. **Corporate policy** (your customized baseline) states *which* controls are required by risk tier; the per-control `*-basic.md` guides list secrets and tuning.
-3. **Into service repositories** — Engineering teams **copy** the scripts and workflow snippets Corporate Security approves for their tier into their own repositories (paths matter; see [Using these runbooks in your own repository](#using-these-runbooks-in-your-own-repository)). That remains the default integration model: **opt in per control**, wire secrets per the runbook, and own the pipeline—**unless** your organization mandates consumption from a [corporate golden repo](#staying-current-with-upstream-runbooks) instead of ad-hoc paste.
-4. **Staying current** — Copy-paste pins a snapshot. We recommend one of the patterns in [Staying current with upstream runbooks](#staying-current-with-upstream-runbooks) so teams receive **reviewed updates** from Corporate Security rather than blind-tracking public upstream.
-
-## Live demo on GitHub
-
-To show scans in Actions, follow **[demo-github-security-ci-walkthrough.md](../../runbooks/appsec/demo-github-security-ci-walkthrough.md)** — you **copy** `runbooks/appsec/` scripts and the `github-actions-*.yml` templates you want into a repo that includes **`test-app-vulnerable-todo`** (or your app), then enable Actions and secrets per **[setup-github-actions.md](../../runbooks/appsec/setup-github-actions.md)**. This upstream project does **not** ship a mandatory workflow under `.github/workflows/`; adoption is copy-paste only.
-
-**Distributing to an operating company or product team?** Point them to **[Using these runbooks in your own repository](#using-these-runbooks-in-your-own-repository)** below (or share this whole file). That section is the canonical “what to copy where” checklist; individual scanner guides only add tool-specific secrets and options. **Subsidiary or divisional security** may maintain their own forked “golden” template (see [Staying current with upstream runbooks](#staying-current-with-upstream-runbooks)) as long as it **meets or exceeds** corporate minimums.
+**Policy and process:** The [policy baseline](framework/appsec-policy-baseline.md) states *what* is required. The [full-circle program overview](appsec-program-full-circle.md) and phases `01`–`06` describe *how* to operate across the SDLC. [**Policy and process alignment**](policy-process-alignment.md) shows how following the program satisfies policy controls, where evidence is recorded, and what remains optional or in roadmap.
 
 ---
 
-## Who you are → where to go
+## What this documentation covers
 
-| Role | Start with | Then |
+1. **Policy and operating model** — Phases [`01`](program/01-plan-and-design.md) through [`06`](program/06-improve-and-govern.md), the [full-circle overview](appsec-program-full-circle.md), [OWASP SAMM reference](program/framework-owasp-samm.md), and rollout tracking ([implementation master checklist](program/implementation-master-checklist.md)).
+2. **Normative controls** — [AppSec policy baseline](framework/appsec-policy-baseline.md), [severity and CI gates](framework/severity-policy.md), and [contextual enhancements](framework/appsec-policy-baseline-contextual-enhancements.md) where regulations or data types apply.
+3. **Evidence and automation** — [Policy ↔ evidence mapping](framework/policy-evidence-mapping.yaml) (metadata fields, job types, pass criteria for catalogs and CI integration).
+4. **Standard forms** — [Templates](templates/) (risk tier, classification, threat model, ADR, PR checklist, exceptions, release sign-off).
+5. **Reference CI controls** — Runnable scanner jobs and pipeline snippets documented under [`runbooks/appsec/`](../../runbooks/appsec/) in the program source tree; engineering **installs** the jobs Corporate Security approves per application tier (see [Using these runbooks in your own repository](#using-these-runbooks-in-your-own-repository)).
+
+Some sections describe **roadmap items** or **SHOULD** controls not yet packaged as first-class runbooks. Those are called out in [Known gaps](#known-gaps-and-roadmap) and in the [full-circle overview](appsec-program-full-circle.md).
+
+---
+
+## Publishing in a documentation catalog
+
+If you ingest only this documentation tree into a portal (Markdown → HTML):
+
+- **Relative links** between pages assume the **same folder layout** as here (`framework/`, `program/`, `templates/`, etc.). Preserve paths when importing.
+- Links to **`../../runbooks/appsec/`** or **`../../test-app-vulnerable-todo/`** point to **reference implementation** assets outside `/policy/appsec/`. Either copy those assets to a URL your catalog can reach and update links, or replace them with pointers to your **internal golden repository** where scanner jobs are hosted.
+
+---
+
+## Optional: validating CI controls (reference)
+
+To exercise reference pipelines locally or in GitHub Actions, see the walkthrough and setup guides (paths are relative to the **program source repository**):
+
+- [Demo: security CI walkthrough](../../runbooks/appsec/demo-github-security-ci-walkthrough.md)
+- [Setup: GitHub Actions](../../runbooks/appsec/setup-github-actions.md)
+
+Use an approved test application or sandbox; do not run ad hoc scans against production without authorization.
+
+---
+
+## Audience guide
+
+| Role | Start here | Then |
 |------|------------|------|
-| **Corporate Security / central AppSec** | This page + [policy baseline](framework/appsec-policy-baseline.md) | Own the golden repo, policy interpretation, and reviewed rollouts to operating units |
-| **Sponsor / leadership** | [Program overview](appsec-program-full-circle.md) (outcomes, baseline, gaps) | [Policy ↔ process alignment](policy-process-alignment.md) · [Policy baseline](framework/appsec-policy-baseline.md) |
-| **AppSec / security program owner (BU or subsidiary)** | This page (journey below) | [Implementation master checklist](program/implementation-master-checklist.md) |
-| **Engineering lead / platform** | [03 CI Gate](program/03-ci-gate.md) + [scanner runbooks](#scanner-runbooks-and-ci-templates) | [Policy evidence mapping](framework/policy-evidence-mapping.yaml) (metadata integration) |
-| **Engineering teams (service repos)** | This page: [journey](#user-journey-running-the-program-recommended-order) + [copy/paste checklist](#using-these-runbooks-in-your-own-repository) | Per-control `*-basic.md` guides + YAML Corporate Security has approved for your tier |
-| **Developers** | [02 Build and Commit](program/02-build-and-commit.md) | Individual scanner guides linked below |
+| **Corporate Security / central AppSec** | This page + [policy baseline](framework/appsec-policy-baseline.md) | Golden source for jobs, policy interpretation, rollouts |
+| **Sponsor / leadership** | [Program overview](appsec-program-full-circle.md) | [Policy ↔ process alignment](policy-process-alignment.md) · [Policy baseline](framework/appsec-policy-baseline.md) |
+| **AppSec program owner (BU or subsidiary)** | [Recommended adoption order](#recommended-adoption-order-policy-through-maturity) | [Implementation master checklist](program/implementation-master-checklist.md) |
+| **Engineering lead / platform** | [03 CI Gate](program/03-ci-gate.md) + [Scanner runbooks and CI templates](#scanner-runbooks-and-ci-templates) | [Policy evidence mapping](framework/policy-evidence-mapping.yaml) |
+| **Engineering teams (service repos)** | [Recommended adoption order](#recommended-adoption-order-policy-through-maturity) + [CI integration](#using-these-runbooks-in-your-own-repository) | Approved `*-basic.md` guides and tier configuration from Corporate Security |
+| **Developers** | [02 Build and commit](program/02-build-and-commit.md) | Scanner guides linked from the table below |
 
 ---
 
-## User journey: running the program (recommended order)
+## Recommended adoption order (policy through maturity)
 
-Follow these steps in order the first time your organization adopts or reuses this template. **Corporate Security** typically leads steps 1–3 with policy and risk owners; operating companies execute steps 4–6 with engineering.
+Follow in order for initial rollout. **Corporate Security** typically leads steps 1–3 with policy and risk owners; operating units execute steps 4–6 with engineering.
 
 ### Step 1 — Understand the model
 
-Read once so everyone shares the same vocabulary.
+1. [Full-circle program overview](appsec-program-full-circle.md) — lifecycle, tooling, gaps, SAMM positioning.
+2. [OWASP SAMM reference](program/framework-owasp-samm.md) — maturity assessment versus day-to-day implementation.
 
-1. [Full-circle program overview](appsec-program-full-circle.md) — lifecycle, current tooling, known gaps, SAMM positioning.
-2. [OWASP SAMM reference](program/framework-owasp-samm.md) — how SAMM relates to this repo (maturity vs implementation).
-
-**Outcome:** You know what “full circle” means here and that SAMM scores maturity; this repo supplies runbooks and policy templates.
+**Outcome:** Shared vocabulary for “full circle” AppSec and how SAMM fits the program.
 
 ---
 
-### Step 2 — Define policy and evidence (Layer 1–2)
+### Step 2 — Establish policy and evidence (Layer 1–2)
 
-1. Copy and customize [AppSec policy baseline](framework/appsec-policy-baseline.md) so **corporate policy** states MUST/SHOULD, risk tiers, severities, and exceptions for your enterprise (this repo ships a template; your legal and GRC teams finalize wording).
-2. Align [Policy → evidence mapping](framework/policy-evidence-mapping.yaml) with your **application metadata** system (fields, job types, artifact types, pass criteria).
+1. Adopt and publish the [AppSec policy baseline](framework/appsec-policy-baseline.md) with MUST/SHOULD, risk tiers, severities, and exceptions approved by **legal / GRC** as applicable.
+2. Align [Policy evidence mapping](framework/policy-evidence-mapping.yaml) with the **application catalog or metadata platform** (fields, job types, artifacts, pass criteria).
 
-**Outcome:** **Corporate policy** is normative once approved; your platform can evaluate compliance from metadata + evidence.
+**Outcome:** Normative policy and measurable evidence for compliance views.
 
 ---
 
 ### Step 3 — Plan the rollout
 
-Use [Implementation master checklist](program/implementation-master-checklist.md) as the **single project tracker** (owners, dates, evidence per workstream).
+Use the [implementation master checklist](program/implementation-master-checklist.md) as the execution tracker (owners, dates, evidence per workstream).
 
-**Outcome:** No silent gaps between “we have docs” and “we are operating.”
+**Outcome:** Controlled rollout without undocumented gaps.
 
 ---
 
-### Step 4 — Operate the lifecycle (phases 01–06)
+### Step 4 — Run the lifecycle (phases 01–06)
 
-Execute work **in lifecycle order**; each phase doc maps to SAMM and links forward.
+Execute work **in lifecycle order**; each phase maps to SAMM practices.
 
 | Order | Phase | Document |
 |------:|-------|----------|
@@ -77,73 +96,74 @@ Execute work **in lifecycle order**; each phase doc maps to SAMM and links forwa
 | 5 | Runtime and operate | [05-runtime-and-operate.md](program/05-runtime-and-operate.md) |
 | 6 | Improve and govern | [06-improve-and-govern.md](program/06-improve-and-govern.md) |
 
-**Outcome:** Process is repeatable per team; scanners plug into step 3 (and parts of 4–5).
+**Outcome:** Repeatable process per team; scanners align with phase 3 (and parts of 4–5).
 
 ---
 
-### Step 5 — Wire technical controls (scanners)
+### Step 5 — Implement technical controls
 
-Add the runbooks your policy requires. Defaults in this repo are **Docker-based** and CI-oriented.
+Deploy the CI jobs **Corporate Security** mandates for each **risk tier**. Reference implementations use Docker-based shell runbooks and workflow templates.
 
-See [Scanner runbooks and CI templates](#scanner-runbooks-and-ci-templates) below, and the checklist [Using these runbooks in your own repository](#using-these-runbooks-in-your-own-repository) when copying files into another repository.
+See [Scanner runbooks and CI templates](#scanner-runbooks-and-ci-templates) and [Using these runbooks in your own repository](#using-these-runbooks-in-your-own-repository).
 
-**Outcome:** Pipelines produce artifacts that satisfy your evidence mapping.
+**Outcome:** Pipelines produce artifacts that match the evidence mapping.
 
 ---
 
 ### Step 6 — Measure maturity (SAMM)
 
-1. Fill [SAMM coverage checklist](program/samm-coverage-checklist.md) with current/target and evidence links.
-2. Revisit quarterly; tie improvements back to the [implementation checklist](program/implementation-master-checklist.md).
+1. Complete [SAMM coverage checklist](program/samm-coverage-checklist.md) with current/target state and evidence links.
+2. Revisit on a quarterly cadence; feed gaps into the [implementation checklist](program/implementation-master-checklist.md).
 
-**Outcome:** Program improvement is explicit, not ad hoc.
+**Outcome:** Visible improvement planning, not ad hoc effort.
 
 ---
 
-## Repository layout (how this folder is organized)
+## Documentation structure
 
-| Area | Path | Purpose |
-|------|------|---------|
-| **Entry / journey** | `policy/appsec/README.md` (this file) | User flow and navigation |
-| **Program strategy** | `policy/appsec/appsec-program-full-circle.md` | Overview, tooling summary, gaps backlog |
-| **Policy & evidence** | `policy/appsec/framework/` | Normative policy template + YAML for metadata/evidence mapping |
-| **Lifecycle & SAMM** | `policy/appsec/program/` | Phase guides (`01`–`06`), SAMM docs, checklists, implementation tracker |
-| **Scanners + CI** | `runbooks/appsec/*.sh`, `*.md`, `github-actions-*.yml`, `gitlab-ci-*.yml` | Runnable controls and copy-paste pipelines |
+Paths below are relative to the **application security program documentation** root (`policy/appsec/` in the source layout).
 
-Policy and lifecycle docs live under **`policy/appsec/`**; scanner shell scripts and CI templates live under **`runbooks/appsec/`** (the path your copied workflows invoke from the service repo root). A future refactor could co-locate them; if you do that, update links in this file and in the root README.
+| Area | Path | Contents |
+|------|------|----------|
+| **Documentation home** | `README.md` (this page) | Navigation, adoption order, CI reference |
+| **Program strategy** | `appsec-program-full-circle.md` | Outcomes, tooling summary, gap backlog |
+| **Policy and evidence** | `framework/` | Policy baseline, severity policy, evidence mapping YAML |
+| **Lifecycle and SAMM** | `program/` | Phase guides `01`–`06`, SAMM reference, checklists |
+| **Standard forms** | `templates/` | Risk tier, classification, threat model, ADR, PR, exception, release |
+| **Alignment** | `policy-process-alignment.md` | Policy ↔ process crosswalk and assurance |
+| **Glossary** | `glossary.md` | Shared definitions |
+| **Reference CI jobs** | `runbooks/appsec/` (outside this tree in source) | Shell scripts, workflow templates, per-control guides |
+
+Program documentation and reference jobs may live in separate repositories in your enterprise; cross-links should be adjusted when publishing.
 
 ---
 
 ## Using these runbooks in your own repository
 
-**GitHub Actions — step-by-step (copy → push → Actions runs):** [setup-github-actions.md](../../runbooks/appsec/setup-github-actions.md). That page lists the exact files and settings; the checklist below is the same content in short form.
+**GitHub Actions (step-by-step):** [setup-github-actions.md](../../runbooks/appsec/setup-github-actions.md)
 
-The workflow templates under **`runbooks/appsec/`** assume jobs run from the **service repository root** and shell scripts live at **`runbooks/appsec/<name>.sh`** (see any `github-actions-*.yml` `run:` line). When an **operating company or product team** adopts a control, they should do the following **in order** (unless Corporate Security instructs you to pull from an internal golden repo instead—see below).
+Approved workflow templates assume jobs run from the **service repository root** with shell scripts at **`runbooks/appsec/<name>.sh`** (see each `github-actions-*.yml` `run:` line). To adopt a control:
 
-1. **Copy the shell scripts** you need into the same path, **`runbooks/appsec/`**, from the repo root (create the directories if missing). Without that path, pasted workflows will not find the scripts unless you edit every `run:` path.
-2. **Copy the matching GitHub Actions file** from [`github-actions-*.yml`](../../runbooks/appsec/) into the service repo’s **`.github/workflows/`** (any filename is fine; adjust `name:` / triggers per corporate standards).
-3. **GitLab:** copy the matching [`gitlab-ci-*.yml`](../../runbooks/appsec/) fragment into **`.gitlab-ci.yml`** or use `include:` as your platform prefers.
-4. **Secrets and variables:** open the **guide** (the `*-basic.md` for that control) and configure what **Corporate Security** has approved for your environment (for example `SNYK_TOKEN`, `OPENAI_API_KEY`). Optional tuning often uses repository **variables** (`SAST_SCAN_PATH`, `LLM_MODEL`, and so on); those are documented per guide, not duplicated here.
-5. **LLM PR review:** besides the workflow YAML, add the prompt file(s) described in [pr-llm-security-review.md](../../runbooks/appsec/pr-llm-security-review.md) under `.github/`—only where corporate policy allows sending code or findings to an external model.
-6. **Policy / program docs (optional):** teams may copy or link `framework/` and `program/` for context; they are **not** required for scanners to run.
-
-**Demos:** Clone or fork this repository to obtain the files, then follow [demo-github-security-ci-walkthrough.md](../../runbooks/appsec/demo-github-security-ci-walkthrough.md) — you run Actions **in your own repo** after copying workflows per [setup-github-actions.md](../../runbooks/appsec/setup-github-actions.md).
+1. **Install** the shell scripts under **`runbooks/appsec/`** from the repository root (create directories if missing), unless Corporate Security publishes a different path—then update workflow `run:` lines consistently.
+2. **Install** the matching GitHub Actions file from [`github-actions-*.yml`](../../runbooks/appsec/) into **`.github/workflows/`** (filename flexible; align `name:` and triggers with standards).
+3. **GitLab:** merge the matching [`gitlab-ci-*.yml`](../../runbooks/appsec/) fragment into **`.gitlab-ci.yml`** or use `include:` per platform practice.
+4. **Secrets and variables:** follow each control’s `*-basic.md` guide for approved secrets (e.g. `SNYK_TOKEN`) and optional variables (`SAST_SCAN_PATH`, etc.).
+5. **LLM-assisted PR review:** add prompt files per [pr-llm-security-review.md](../../runbooks/appsec/pr-llm-security-review.md) only where policy permits external model processing.
+6. **Program documentation** may be linked for context; it is **not** required inside the service repo for scanners to run.
 
 ### Staying current with upstream runbooks
 
-Copy-paste is intentional and simple: the service repo **owns** the files it copied, and merges updates when **Corporate Security** or your division publishes a new baseline.
+The service repository **owns** the jobs it installs. Updates are distributed when **Corporate Security** (or divisional security) publishes a new **approved baseline**.
 
-If you want **ongoing sync** with the public `open-runbooks` project **or** with your enterprise’s fork, common patterns are:
+| Approach | Summary | Tradeoff |
+|----------|---------|----------|
+| **Controlled re-install** | Re-copy approved `.sh` and YAML when Corporate Security issues a release or bulletin. | Simple; depends on clear communication. |
+| **Git submodule** | Vendor the golden package (e.g. under `vendor/…`) and point CI at that path; update submodule when approved. | Requires path discipline in workflows. |
+| **`git subtree`** | Merge the runbook tree into a monorepo on an approved cadence. | Single repo; heavier history. |
+| **Corporate golden repository (recommended at scale)** | Corporate Security maintains the canonical package; operating units install or invoke jobs from it. | Strongest alignment with policy and audit. |
+| **Division fork** | A business unit maintains an approved fork with local tooling; must stay at or above corporate minimums. | Flexibility; reconcile drift periodically. |
 
-| Approach | Idea | Tradeoff |
-|----------|------|----------|
-| **Periodic manual or scripted copy** | Operating teams re-copy `runbooks/appsec/*.sh` and selected YAML when **Corporate Security** issues a bulletin or tagged release. | Lowest magic; relies on clear communication from the center. |
-| **Git submodule** | Vendor the corporate or upstream repo under e.g. `vendor/open-runbooks/` and point CI at scripts there **or** symlink—**you must edit** pasted workflow `run:` paths if they no longer match `./runbooks/appsec/...`. | Updates are `git submodule update`; path discipline matters. |
-| **`git subtree`** | Pull `runbooks/appsec` into your monorepo on a schedule or when Corporate Security cuts a release. | One repo; history is heavier than submodule; still path-aware. |
-| **Corporate golden repo (recommended at scale)** | **Corporate Security maintains an internal Git repository** (the **golden template**) that stays **up to date** with reviewed changes from upstream: we tag releases, document what changed, and **operating companies consume that repo** as the canonical source—e.g. copy from it, submodule it, or invoke shared pipelines that reference it. Service teams **do not** need to track the public repo directly. | Requires Corporate Security ownership and a lightweight release cadence; best alignment with **corporate policy** and audit. |
-| **Division / BU fork of the golden repo** | An **operating company or internal platform team** may **fork** the corporate golden repo (or this upstream template) into **their own internal template repository**, customize for local tooling, and still **stay at or above** corporate minimums. Corporate Security should review material deviations. | Flexibility for large orgs; risk of drift without periodic reconciliation. |
-
-There is **no single “always latest”** model that is safe for every enterprise: upstream can change behavior, image tags, or defaults. **Corporate policy** should require either **pinning** to a known revision or **subscribing** to a **Corporate Security–approved** mirror—not blind auto-sync to public `main`.
+Corporate policy should require **pinning** or subscribing to a **Corporate Security–approved** source—not unreviewed auto-tracking of external default branches.
 
 ---
 
@@ -161,47 +181,44 @@ There is **no single “always latest”** model that is safe for every enterpri
 | DAST (Dastardly) | [dast-dastardly-basic.sh](../../runbooks/appsec/dast-dastardly-basic.sh) | [dast-dastardly-basic.md](../../runbooks/appsec/dast-dastardly-basic.md) | [github-actions-dast-dastardly.yml](../../runbooks/appsec/github-actions-dast-dastardly.yml) | [gitlab-ci-dast-dastardly.yml](../../runbooks/appsec/gitlab-ci-dast-dastardly.yml) |
 | PR review (LLM, advisory) | — | [pr-llm-security-review.md](../../runbooks/appsec/pr-llm-security-review.md) | [diff](../../runbooks/appsec/github-actions-pr-llm-security-review.yml) · [findings](../../runbooks/appsec/github-actions-pr-llm-security-review-findings.yml) | — |
 
-**Local Docker tip:** From the host, use `http://host.docker.internal:<port>` as the scan target, not `http://localhost`, when the scanner runs inside a container.
+**Local Docker:** When the scanner runs in a container and the app runs on the host, use `http://host.docker.internal:<port>` as the target, not `http://localhost`.
 
 ---
 
-## Demo application
+## Practice application (optional)
 
-- [test-app-vulnerable-todo](../../test-app-vulnerable-todo/) — intentional vulnerabilities for validating SAST/DAST/secrets runbooks.
-
----
-
-## Known gaps (program not “final” — intentional)
-
-These are **documented but not fully implemented** as first-class runbooks or org-specific artifacts. They often surface when you follow the journey above.
-
-| Gap | Why it matters | Where tracked |
-|-----|----------------|----------------|
-| **IaC / K8s scanning** | Release/deploy assurance | [appsec-program-full-circle.md](appsec-program-full-circle.md) Known Gaps |
-| **Container image scanning** (distinct from filesystem SCA) | Artifact trust | Same |
-| **SBOM + provenance** | Supply chain / audit | Same + [04-release-and-deploy.md](program/04-release-and-deploy.md) |
-| **Single combined “baseline” pipeline** | One job graph per repo | Backlog; compose from existing YAML |
-| **Training / champions package** | SAMM Governance depth | [Future components](appsec-program-full-circle.md) |
-| **Central findings aggregation** | One view across tools | Not in repo; your metadata platform |
-| **Risk-tier profiles** (core vs regulated) | Policy variants | Extend `framework/` with profile overlays when ready |
-
-Use the [implementation master checklist](program/implementation-master-checklist.md) to turn gaps into dated, owned work.
+- [test-app-vulnerable-todo](../../test-app-vulnerable-todo/) — intentional weaknesses for **non-production** validation of SAST, DAST, and secrets jobs.
 
 ---
 
-## Quick links (all program assets)
+## Known gaps and roadmap
 
-- [Policy ↔ process alignment](policy-process-alignment.md) — crosswalk and assurance between policy and phases 01–06
-- [Program templates](templates/) — risk tier, data classification, [threat model (catalog lite)](templates/threat-model-catalog-lite.md), ADR, PR checklist, exception form, release sign-off
-- [GitHub Actions: copy-paste setup](../../runbooks/appsec/setup-github-actions.md)
+Items documented but **not** necessarily shipped as first-class runbooks in the reference package:
+
+| Gap | Why it matters | Tracked in |
+|-----|----------------|------------|
+| **IaC / K8s scanning** | Release and deploy assurance | [Full-circle overview](appsec-program-full-circle.md) |
+| **Container image scanning** (beyond filesystem SCA) | Artifact trust | Same |
+| **SBOM + provenance** | Supply chain and audit | Same + [04 Release and deploy](program/04-release-and-deploy.md) |
+| **Single combined baseline pipeline** | One job graph per repo | Roadmap; compose from existing YAML |
+| **Training / champions** | SAMM governance depth | [Full-circle overview](appsec-program-full-circle.md) |
+| **Central findings aggregation** | Unified triage view | Platform / catalog decision |
+| **Risk-tier policy profiles** | Core vs regulated variants | Extend `framework/` when ready |
+
+Use the [implementation master checklist](program/implementation-master-checklist.md) to assign owners and dates.
+
+---
+
+## Quick links
+
+- [Policy ↔ process alignment](policy-process-alignment.md)
+- [Program templates](templates/) — risk tier, classification, [threat model (catalog lite)](templates/threat-model-catalog-lite.md), ADR, PR checklist, exception, release sign-off
+- [GitHub Actions setup](../../runbooks/appsec/setup-github-actions.md)
 - [Full-circle overview](appsec-program-full-circle.md)
 - [Policy baseline](framework/appsec-policy-baseline.md) · [Severity policy](framework/severity-policy.md) · [Glossary](glossary.md)
-- [Policy baseline — controls only](framework/appsec-policy-baseline-minified.md) · [Contextual policy enhancements](framework/appsec-policy-baseline-contextual-enhancements.md) (PII, PHI, PCI, etc.)
+- [Policy baseline — minified](framework/appsec-policy-baseline-minified.md) · [Contextual enhancements](framework/appsec-policy-baseline-contextual-enhancements.md)
 - [Policy evidence mapping (YAML)](framework/policy-evidence-mapping.yaml)
-- [SAMM reference](program/framework-owasp-samm.md)
-- [SAMM coverage checklist](program/samm-coverage-checklist.md)
+- [SAMM reference](program/framework-owasp-samm.md) · [SAMM coverage checklist](program/samm-coverage-checklist.md)
 - [Implementation master checklist](program/implementation-master-checklist.md)
 
----
-
-*Last structural pass: use this README as the canonical navigation for the AppSec program; extend the “Known gaps” table as you discover missing pieces.*
+**Repository index:** The [root README](../../README.md) lists the full source tree including reference runbooks.

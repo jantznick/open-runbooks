@@ -1,9 +1,10 @@
-# OWASP SAMM Coverage Checklist (Working Template)
+# OWASP SAMM coverage checklist
 
 ## Purpose
-Track current and target SAMM coverage using practical, auditable checklist items tied to this repository.
 
-Use this with:
+Track current and target SAMM coverage using auditable checklist items tied to **this application security program**.
+
+Use along with:
 - [`framework-owasp-samm.md`](framework-owasp-samm.md)
 - [`../appsec-program-full-circle.md`](../appsec-program-full-circle.md)
 - [`../glossary.md`](../glossary.md)
@@ -16,8 +17,9 @@ Use this with:
 - Add owner, target quarter, and evidence link.
 - Reassess quarterly.
 
-## Current Maturity Reality Check
-This repository provides strong implementation patterns, but does not by itself prove full SAMM completion across all functions and maturity levels.
+## Current maturity reality check
+
+Strong reference patterns are available for several practices, but **full SAMM Level 3** across every function still depends on how completely your organization adopts policy, evidence, and governance.
 
 In most teams, this content maps to:
 - partial-to-strong Level 1 coverage in multiple practices

@@ -1,15 +1,16 @@
-# AppSec Policy Baseline (Template)
+# Corporate application security policy baseline
 
 ## Purpose
-This is a reusable, policy-driven app sec baseline for development teams. This baseline is a minimum level of application security intended to be enhanced upon based on specific applications level of data collection and handling.
 
-When your organization publishes this document, **Corporate Security** owns the authoritative text: **corporate policy** (this baseline, once customized and approved by legal/GRC) states what **operating companies and engineering teams must implement**. Teams may add **stricter** local rules; weaker thresholds require the corporate **exception** process.
+This document is the **corporate application security policy baseline** for internally developed software. It establishes the **minimum** level of application security; teams may adopt **stricter** controls. **Weaker** thresholds require the corporate **exception** process.
+
+**Corporate Security** (or the delegated authority) owns the authoritative text once **legal and GRC** (or equivalent) approve publication. **Operating companies and engineering** must implement the **MUST** controls and treat **SHOULD** controls as mandatory unless a risk-based waiver is approved per your governance model.
 
 Each control below includes a **short requirement** (MUST/SHOULD) plus **actionable guidance**: who acts, what to do, what “good” looks like, and where evidence is described in Layer 2.
 
 **Quick reference:** Minified requirements and actions only (no tables)—[`appsec-policy-baseline-minified.md`](appsec-policy-baseline-minified.md).
 
-**Program templates:** Risk tier, data classification, threat model, ADR, PR checklist, exception form, release sign-off—[`../templates/`](../templates/).
+**Standard forms:** Evidence and workflow checklists—[`../templates/`](../templates/).
 
 **Severity and CI gates:** Canonical thresholds and SLAs—[`severity-policy.md`](severity-policy.md) · [`severity-policy.yaml`](severity-policy.yaml).
 

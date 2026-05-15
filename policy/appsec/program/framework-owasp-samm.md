@@ -1,11 +1,12 @@
 # Framework Reference: OWASP SAMM
 
 ## Purpose
-Provide a practical, local reference to OWASP SAMM so this repo's runbooks can be aligned to a recognized AppSec maturity framework.
 
-This document is a working guide, not an official SAMM specification.
+Practical local reference to OWASP SAMM so the **application security program** can align maturity measurement with day-to-day operations.
 
-**Glossary:** Shared terms (SAMM, evidence, risk tier, CI gate, etc.)—[`../glossary.md`](../glossary.md).
+This document is a **working guide**, not the official SAMM specification.
+
+**Glossary:** Shared terms—[`../glossary.md`](../glossary.md).
 
 ## What OWASP SAMM Is
 OWASP SAMM (Software Assurance Maturity Model) is a framework for:
@@ -15,16 +16,18 @@ OWASP SAMM (Software Assurance Maturity Model) is a framework for:
 
 It is intentionally flexible so teams can adapt practices to their stack, risk profile, and delivery model.
 
-## How SAMM Fits This Repo
+## How SAMM fits this program
+
 - SAMM answers: "What capabilities should we mature?"
-- This repo answers: "How do we implement and operate those capabilities?"
+- This program answers: "How do we implement and operate those capabilities?"
 
 Use both together:
-1. assess with SAMM,
-2. prioritize gaps,
-3. implement via runbooks and program phase docs in this repo.
-4. track progress using [`samm-coverage-checklist.md`](samm-coverage-checklist.md).
-5. enforce policy controls using:
+
+1. Assess with SAMM.
+2. Prioritize gaps.
+3. Implement using phase playbooks and approved CI jobs.
+4. Track progress using [`samm-coverage-checklist.md`](samm-coverage-checklist.md).
+5. Enforce policy controls using:
    - [`../framework/appsec-policy-baseline.md`](../framework/appsec-policy-baseline.md)
    - [`../framework/severity-policy.yaml`](../framework/severity-policy.yaml)
    - [`../framework/policy-evidence-mapping.yaml`](../framework/policy-evidence-mapping.yaml)
@@ -66,7 +69,7 @@ Typical progression:
 - Implement improvements via runbooks and process updates
 - Re-score periodically (for example quarterly)
 
-## Example Mapping to Repo Phase Docs
+## Example mapping to phase documents
 - Governance + Design:
   - `01-plan-and-design.md`
   - `06-improve-and-govern.md`
@@ -85,13 +88,15 @@ Typical progression:
 - Applying the same maturity target to all systems regardless of risk
 - Running assessments without execution ownership
 
-## Recommended Adoption Pattern for This Repo
-- Keep [`../appsec-program-full-circle.md`](../appsec-program-full-circle.md) as program strategy + backlog
-- Keep phase docs as operating playbooks
-- Use [`samm-coverage-checklist.md`](samm-coverage-checklist.md) as the maturity tracking worksheet
-- Use SAMM assessment snapshots to prioritize what to build next
-- Review progress quarterly with explicit maturity and risk outcomes
+## Recommended operating pattern
+
+- Use [`../appsec-program-full-circle.md`](../appsec-program-full-circle.md) for strategy and backlog.
+- Use phase docs as operating playbooks.
+- Use [`samm-coverage-checklist.md`](samm-coverage-checklist.md) as the maturity worksheet.
+- Use SAMM assessments to choose the next concrete improvements.
+- Review quarterly with explicit risk and maturity outcomes.
 
 ## Notes
-- For authoritative definitions and updates, refer to official OWASP SAMM materials.
-- Keep this document concise and implementation-focused for local program use.
+
+- For authoritative SAMM definitions, use official OWASP SAMM materials.
+- Keep this reference concise and aligned to your internal program.

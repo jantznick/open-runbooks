@@ -28,7 +28,7 @@ Provide deterministic, auditable security quality gates before merge/release pro
 
 ## How controls land in service repositories
 
-Scanner jobs in this program are implemented as **shell runbooks** plus optional **CI YAML** that invokes them from the repo root (`./runbooks/appsec/...`). **Corporate Security** provides these templates; **engineering teams copy** what **corporate policy** requires for their application tier into service repositories. The canonical checklist is [Using these runbooks in your own repository](../README.md#using-these-runbooks-in-your-own-repository). Where **Corporate Security** maintains an internal **golden repo**, teams may sync from that instead of pasting from the public catalog—see [Staying current with upstream runbooks](../README.md#staying-current-with-upstream-runbooks) (including divisional forks).
+Scanner jobs in this program are implemented as **shell runbooks** plus optional **CI YAML** that invokes them from the repository root (`./runbooks/appsec/...`). **Corporate Security** publishes approved job templates; **engineering teams install** what **corporate policy** requires for each application tier. The canonical procedure is [Using these runbooks in your own repository](../README.md#using-these-runbooks-in-your-own-repository). Where **Corporate Security** maintains an internal **golden repository**, teams consume jobs from that source instead of unapproved copies—see [Staying current with upstream runbooks](../README.md#staying-current-with-upstream-runbooks) (including divisional packages).
 
 ## Suggested Tooling in This Repo
 - Required:

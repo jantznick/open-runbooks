@@ -1,34 +1,34 @@
-# Full-Circle AppSec Program (Draft)
+# Application security program — full-circle overview
 
-**Navigation:** For the recommended **user journey** (policy → phases → scanners → SAMM) and folder map, start at [`README.md`](README.md) in this directory.
+**Navigation:** Start at the [documentation home](README.md) for adoption order, policy links, and CI reference.
 
-**Policy alignment:** This document is the **process** side of the program. The normative **policy** is [`framework/appsec-policy-baseline.md`](framework/appsec-policy-baseline.md). [**Policy and process alignment**](policy-process-alignment.md) shows how operating phases 01–06 satisfies policy controls (and where gaps remain).
+**Policy alignment:** This document describes the **operating model** (how work flows across the SDLC). Normative requirements are in [`framework/appsec-policy-baseline.md`](framework/appsec-policy-baseline.md). [**Policy and process alignment**](policy-process-alignment.md) maps phases 01–06 to policy controls and notes gaps.
 
-**Corporate Security → operating companies:** Program and phase documents here describe *process* (much of it still **draft**—see tone in this file and gaps below). **We will provide** updates as this bundle matures; once your organization **adopts** the customized baseline, **corporate policy** should treat the agreed controls as the minimum bar. **Runnable scanners** live under [`runbooks/appsec/`](../../runbooks/appsec/) in this repository (shell runbooks and CI YAML). Engineering teams read the phases that apply to them, pick controls **Corporate Security** has approved for their tier from the [scanner table](README.md#scanner-runbooks-and-ci-templates), then **copy** scripts and workflows into service repositories per [Using these runbooks in your own repository](README.md#using-these-runbooks-in-your-own-repository), or consume them from a [corporate golden repo](README.md#staying-current-with-upstream-runbooks). **Internal company teams** may also fork a **divisional golden template** as described there, provided they meet or exceed corporate minimums.
+**Distribution:** Corporate Security publishes this program for **operating companies and engineering**. Phase guides are maintained with policy; substantive changes should be reviewed and communicated on an approved cadence. **Runnable reference jobs** (shell runbooks and CI YAML) live under [`runbooks/appsec/`](../../runbooks/appsec/). Teams implement the controls **Corporate Security** approves for each **risk tier**—see the [scanner reference](README.md#scanner-runbooks-and-ci-templates) and [CI integration](README.md#using-these-runbooks-in-your-own-repository). Consumption may be from a **corporate golden repository** or divisional equivalent that **meets or exceeds** corporate minimums.
 
 ## Goal
 Define a practical end-to-end application security program that can start simple, run in CI/CD, and mature over time without blocking delivery.
 
 This document captures:
-- what is already implemented in this repo
-- what each tool is good at
-- known limitations/downfalls
-- missing controls we should add next
+- reference CI controls available today
+- what each referenced tool category is suited for
+- known limitations and tradeoffs
+- planned extensions (runbooks and policy overlays)
 
-## Framework Positioning (OWASP SAMM)
-This repository does not replace OWASP SAMM. It implements the local "how" while SAMM provides the external maturity reference for the "what good looks like."
+## Framework positioning (OWASP SAMM)
 
-- OWASP SAMM:
-  - maturity model, benchmark, and planning framework
-- This repo:
-  - practical runbooks, control implementations, and operating workflows
+OWASP SAMM complements this program. SAMM describes **maturity** (“what good looks like” at scale); this program describes **how** teams operate and how controls are evidenced.
 
-Use SAMM to assess and prioritize maturity improvements. Use these docs/runbooks to execute those improvements.
+- **OWASP SAMM:** maturity model, benchmarking, and planning
+- **This program:** phase playbooks, reference CI jobs, policy alignment, standard forms
 
-Policy-driven implementation references:
-- `policy/appsec/framework/appsec-policy-baseline.md`
-- `policy/appsec/framework/policy-evidence-mapping.yaml`
-- `policy/appsec/program/implementation-master-checklist.md`
+Use SAMM to assess and prioritize improvements. Use the phase guides and approved jobs to execute them.
+
+**Implementation references:**
+
+- [`framework/appsec-policy-baseline.md`](framework/appsec-policy-baseline.md)
+- [`framework/policy-evidence-mapping.yaml`](framework/policy-evidence-mapping.yaml)
+- [`program/implementation-master-checklist.md`](program/implementation-master-checklist.md)
 
 ## Program Outcomes
 - Prevent high-risk vulnerabilities from reaching production

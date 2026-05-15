@@ -1,4 +1,4 @@
-# AppSec Policy Baseline — Controls only (minified)
+# Corporate application security policy baseline — controls only (minified)
 
 Normative **requirements** and **actions** only. For scope, roles, definitions, metadata registry, evidence tables, retention, and Layer 2 mapping, see [`appsec-policy-baseline.md`](appsec-policy-baseline.md). Severity gates and SLAs: [`severity-policy.md`](severity-policy.md). Terms: [`../glossary.md`](../glossary.md).
 

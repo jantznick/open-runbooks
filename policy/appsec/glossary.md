@@ -1,6 +1,6 @@
 # AppSec program glossary
 
-Short, shared definitions for this repository’s policy, templates, and phase docs. For normative requirements, see the [policy baseline](framework/appsec-policy-baseline.md).
+Short, shared definitions for this **application security program** (policy, process, templates, and evidence). For **MUST/SHOULD** requirements, see the [policy baseline](framework/appsec-policy-baseline.md).
 
 ---
 
@@ -8,7 +8,7 @@ Short, shared definitions for this repository’s policy, templates, and phase d
 
 **Application** — A deployable unit with its own lifecycle, repository(ies), and business purpose. Registered in the metadata catalog with `app_id`, owners, and `risk_tier`.
 
-**AppSec (application security)** — Practices that reduce risk in how software is designed, built, verified, released, and operated. In this program, **Corporate Security** publishes the template; operating companies implement it.
+**AppSec (application security)** — Practices that reduce risk in how software is designed, built, verified, released, and operated. **Corporate Security** publishes the program; operating units execute it.
 
 **ASVS (OWASP Application Security Verification Standard)** — A checklist of security requirements used to define and verify what “secure enough” means for an app type or tier.
 

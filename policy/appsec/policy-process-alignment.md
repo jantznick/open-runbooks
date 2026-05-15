@@ -1,6 +1,8 @@
 # Policy and process alignment
 
-**Purpose:** Show how the **AppSec policy baseline** (what you must do) and the **full-circle program** (how you operate day to day) fit together. Use this when:
+**Purpose:** Show how the **policy baseline** (what must be done) and the **full-circle program** (how teams operate) fit together.
+
+**Use this document when:**
 
 - **Leaders or GRC** need assurance that following the program satisfies corporate policy.
 - **Engineering or platform** need to know which lifecycle phase and artifacts satisfy each policy control when wiring CI/CD.
@@ -19,6 +21,8 @@ Terms: [`glossary.md`](glossary.md).
 ---
 
 ## How they relate
+
+The diagram below is optional; the bullet list and crosswalk tables state the same relationships for hosts that do not render Mermaid.
 
 ```mermaid
 flowchart TB
@@ -68,15 +72,13 @@ flowchart TB
 
 - **Policy** does not prescribe a single vendor or pipeline layout; it states **capabilities** and evidence.
 - **Process** turns policy into **repeatable activities** by lifecycle phase (plan → build → CI → release → operate → govern).
-- **Following the process** (minimum path below) is how this repository intends teams to **meet** the policy baseline, using the bundled templates and reference runbooks unless your org substitutes equivalent controls with the same evidence.
+- **Following the process** (minimum path below) is the **intended** way to meet the policy baseline, using the standard forms and reference CI jobs unless your organization substitutes **equivalent** controls that produce the same evidence.
 
----
+This is **design intent** of this program documentation, not a legal certification. **Corporate Security** should confirm after local customization (placeholders, tools, RACI).
 
 ## Assurance statement (for program owners)
 
 > **If an operating company runs the [minimum operating path](#minimum-operating-path) for each in-scope application**—registry metadata, phase activities, required CI jobs, release sign-off, triage, and exception discipline—**it will satisfy the MUST controls** in the adopted [policy baseline](framework/appsec-policy-baseline.md), subject to [documented gaps](#honest-gaps-and-exceptions) (SHOULD controls, optional runbooks, and org-specific customization).
-
-This is **design intent** of this bundle, not a legal certification. Your Corporate Security team should sign off after customizing placeholders, tool choices, and RACI.
 
 **Reverse direction (for platform / AppSec engineering):**
 
@@ -92,7 +94,7 @@ Minified IDs (A1, B1, …) match [`appsec-policy-baseline-minified.md`](framewor
 
 | ID | Policy requirement (summary) | Process phase(s) | Primary program doc | Templates / runbooks |
 |----|-------------------------------|------------------|---------------------|----------------------|
-| **A1** | Application metadata maintained | 01, 06 | [01-plan-and-design](program/01-plan-and-design.md), [06-improve-and-govern](program/06-improve-and-govern.md) | Registry/catalog; onboarding in [README](README.md) journey step 2 |
+| **A1** | Application metadata maintained | 01, 06 | [01-plan-and-design](program/01-plan-and-design.md), [06-improve-and-govern](program/06-improve-and-govern.md) | Registry/catalog; [README](README.md) adoption step 2 |
 | **A2** | Risk tier and review cadence | 01, 06 | [01-plan-and-design](program/01-plan-and-design.md), [06-improve-and-govern](program/06-improve-and-govern.md) | [risk-tier-rubric](templates/risk-tier-rubric.md), [data-classification-scheme](templates/data-classification-scheme.md) |
 | **B1** | Security requirements (new / high-impact) | 01 | [01-plan-and-design](program/01-plan-and-design.md) | [adr-template](templates/adr-template.md); tickets / design docs |
 | **B2** | Threat modeling (internet-facing / medium+ tier) | 01 | [01-plan-and-design](program/01-plan-and-design.md) | [threat-model-catalog-lite](templates/threat-model-catalog-lite.md) · [schema](templates/threat-model-catalog-schema.yaml) · `AS-DES-002` |
@@ -141,7 +143,7 @@ Corporate Security can cite this as the **default compliance path** for operatin
 6. **Operate:** Schedule re-scans for internet-facing apps (F1); triage findings to SLA (F2).
 7. **Govern:** Quarterly tier review, exception audit, and metrics (06); file exceptions only via [exception form](templates/exception-request-form.md).
 
-**Journey in order:** [README — User journey](README.md#user-journey-running-the-program-recommended-order).
+**Adoption order:** [README — recommended adoption order](README.md#recommended-adoption-order-policy-through-maturity).
 
 ---
 

@@ -1,11 +1,12 @@
-# AppSec Program Implementation Master Checklist
+# AppSec program — implementation master checklist
 
-**Navigation:** Program journey and doc map: [`../README.md`](../README.md).
+**Navigation:** [Documentation home](../README.md).
 
 ## Purpose
-Provide one execution tracker for implementing and customizing all AppSec program documents and controls in this repository.
 
-**Corporate Security** uses this as the master rollout plan across **operating companies**; business-unit AppSec leads track the same items for their scope. **We will provide** updated checklists as the program bundle matures.
+Single execution tracker for standing up and maintaining the **application security program**: policy, evidence integration, lifecycle customization, reference CI jobs, pilots, and SAMM alignment.
+
+**Corporate Security** uses it for enterprise rollout; **business-unit AppSec** uses it for local scope. Refresh **Corporate Security–approved** checklists when policy or reference jobs change.
 
 When workstreams need **concrete CI controls** in service repositories, point engineering to the handoff checklist [Using these runbooks in your own repository](../README.md#using-these-runbooks-in-your-own-repository) (copy paths, secrets, corporate golden repo, or divisional fork).
 

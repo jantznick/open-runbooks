@@ -1,27 +1,27 @@
 # Open Runbooks
 
-Practical, standalone security runbooks for CI/CD pipelines.
+Practical security runbooks and reference CI jobs for pipelines. This repository also hosts **corporate application security program documentation** under [`policy/appsec/`](policy/appsec/README.md).
 
-**Corporate Security** can publish this repository (or a private fork) as the **authoritative program and runbook bundle** for **operating companies and internal engineering**. We provide the lifecycle docs, policy baseline template, and runnable scanner jobs; **corporate policy** (your customized baseline) states what is mandatory by tier. Teams adopt controls by copying files per **[Using these runbooks in your own repository](policy/appsec/README.md#using-these-runbooks-in-your-own-repository)**, or by consuming a **[corporate golden repo](policy/appsec/README.md#staying-current-with-upstream-runbooks)** that we keep current. **Subsidiary or divisional** teams may maintain their own internal golden fork as described there, subject to corporate minimums.
+## Application security program (documentation)
 
-**Copy-paste into your own repo and run GitHub Actions:** [`runbooks/appsec/setup-github-actions.md`](runbooks/appsec/setup-github-actions.md) — exact steps, sample folder layout, one or multiple workflow files.
-
-## AppSec program (start here)
-
-**Main user flow and navigation:** [`policy/appsec/README.md`](policy/appsec/README.md) — journey from policy → lifecycle phases → scanners → SAMM, plus repository layout and **known gaps**.
+**Primary documentation:** [`policy/appsec/README.md`](policy/appsec/README.md) — policy baseline, full-circle operating model (phases 01–06), policy ↔ process alignment, standard forms, and links to reference scanner jobs.
 
 Quick pointers:
 
-- **GitHub Actions setup (copy workflows + runbooks):** [`runbooks/appsec/setup-github-actions.md`](runbooks/appsec/setup-github-actions.md)
-- **Demo walkthrough (optional):** [`runbooks/appsec/demo-github-security-ci-walkthrough.md`](runbooks/appsec/demo-github-security-ci-walkthrough.md)
+- **CI setup (GitHub Actions):** [`runbooks/appsec/setup-github-actions.md`](runbooks/appsec/setup-github-actions.md)
+- **Optional validation walkthrough:** [`runbooks/appsec/demo-github-security-ci-walkthrough.md`](runbooks/appsec/demo-github-security-ci-walkthrough.md)
 - Program overview: [`policy/appsec/appsec-program-full-circle.md`](policy/appsec/appsec-program-full-circle.md)
-- Implementation tracker: [`policy/appsec/program/implementation-master-checklist.md`](policy/appsec/program/implementation-master-checklist.md)
+- Implementation checklist: [`policy/appsec/program/implementation-master-checklist.md`](policy/appsec/program/implementation-master-checklist.md)
 - Policy baseline: [`policy/appsec/framework/appsec-policy-baseline.md`](policy/appsec/framework/appsec-policy-baseline.md)
 - Evidence mapping (YAML): [`policy/appsec/framework/policy-evidence-mapping.yaml`](policy/appsec/framework/policy-evidence-mapping.yaml)
 
-Phase guides (`01`–`06`), SAMM docs, and scanner tables are linked from the AppSec README above. This root README stays a short index.
+Phase guides, SAMM reference, and scanner tables are linked from the documentation home above.
 
-## Runbook Index
+## Runbook index
+
+Reference shell scripts and workflow templates live under `runbooks/appsec/`. **Corporate Security** may publish this tree (or an internal fork) as the **approved job package** for engineering; service teams install jobs per [CI integration](policy/appsec/README.md#using-these-runbooks-in-your-own-repository).
+
+**Quick install:** [`runbooks/appsec/setup-github-actions.md`](runbooks/appsec/setup-github-actions.md)
 
 ### SAST
 - Semgrep/OpenGrep:

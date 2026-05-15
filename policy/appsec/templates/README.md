@@ -1,6 +1,6 @@
-# AppSec program templates
+# AppSec program — standard forms and checklists
 
-Reusable artifacts for governance, design, build, and release. Copy into your registry, ticket system, or repository and customize placeholders (`[like this]`) for your organization.
+Use these **standard forms** for governance, design, build, and release. They support the [policy baseline](../framework/appsec-policy-baseline.md) and evidence in the [catalog / metadata mapping](../framework/policy-evidence-mapping.yaml). Replace bracketed placeholders (`[like this]`) with your organization’s specifics when publishing internally.
 
 **Related policy:** [`../framework/appsec-policy-baseline.md`](../framework/appsec-policy-baseline.md) · **Severity gates:** [`../framework/severity-policy.md`](../framework/severity-policy.md) · **Glossary:** [`../glossary.md`](../glossary.md) · **Evidence mapping:** [`../framework/policy-evidence-mapping.yaml`](../framework/policy-evidence-mapping.yaml)
 
