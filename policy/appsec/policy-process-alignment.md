@@ -106,8 +106,8 @@ Minified IDs (A1, B1, …) match [`appsec-policy-baseline-minified.md`](framewor
 | **D4** | Baseline DAST (internet-facing) | 03, 04, 05 | [03-ci-gate](program/03-ci-gate.md), [04-release-and-deploy](program/04-release-and-deploy.md), [05-runtime-and-operate](program/05-runtime-and-operate.md) | [DAST runbooks](../../runbooks/appsec/) · `AS-CI-004` |
 | **D5** | Severity fail thresholds | 03, 06 | [03-ci-gate](program/03-ci-gate.md), [06-improve-and-govern](program/06-improve-and-govern.md) | [severity-policy](framework/severity-policy.md) · `AS-CI-005` |
 | **E1** | Release security evidence bundle | 04 | [04-release-and-deploy](program/04-release-and-deploy.md) | [release-sign-off-checklist](templates/release-sign-off-checklist.md) · `AS-REL-001` |
-| **E2** | Container / IaC scanning (SHOULD) | 04 | [04-release-and-deploy](program/04-release-and-deploy.md) | Roadmap in [full-circle](appsec-program-full-circle.md) Known Gaps |
-| **E3** | SBOM (SHOULD) | 04 | [04-release-and-deploy](program/04-release-and-deploy.md) | Roadmap in [full-circle](appsec-program-full-circle.md) Known Gaps |
+| **E2** | Container / IaC scanning (SHOULD) | 04 | [04-release-and-deploy](program/04-release-and-deploy.md) | [Known gaps](README.md#known-gaps-and-roadmap) |
+| **E3** | SBOM (SHOULD) | 04 | [04-release-and-deploy](program/04-release-and-deploy.md) | [Known gaps](README.md#known-gaps-and-roadmap) |
 | **F1** | Scheduled re-scan (internet-facing) | 05 | [05-runtime-and-operate](program/05-runtime-and-operate.md) | Scheduled DAST jobs; same runbooks as D4 |
 | **F2** | Findings triage and SLA | 03, 05, 06 | [03-ci-gate](program/03-ci-gate.md), [05-runtime-and-operate](program/05-runtime-and-operate.md), [06-improve-and-govern](program/06-improve-and-govern.md) | Ticketing + [severity-policy](framework/severity-policy.md) · `AS-OPS-002` |
 | **EX** | Exception governance + expiry | 03, 04, 06 | [03-ci-gate](program/03-ci-gate.md), [06-improve-and-govern](program/06-improve-and-govern.md) | [exception-request-form](templates/exception-request-form.md) · `AS-GOV-001` |
@@ -127,7 +127,7 @@ Use this when rolling out the program to teams (“follow phases 01–06”).
 | **[05 Runtime and operate](program/05-runtime-and-operate.md)** | Scheduled scans, triage, incidents | F1, F2; D4 ongoing |
 | **[06 Improve and govern](program/06-improve-and-govern.md)** | Metrics, exceptions, tier review, policy tuning | A2, D5, F2, EX; continuous A1 |
 
-**Full-circle overview** ([`appsec-program-full-circle.md`](appsec-program-full-circle.md)) ties the phases together, lists tooling, and tracks **known gaps** not yet fully automated in runbooks.
+**Full-circle overview** ([`appsec-program-full-circle.md`](appsec-program-full-circle.md)) explains how phases 01–06 connect; phase guides and the [documentation home](README.md) carry tooling detail and **known gaps**.
 
 ---
 

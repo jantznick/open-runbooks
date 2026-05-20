@@ -90,7 +90,7 @@ Typical progression:
 
 ## Recommended operating pattern
 
-- Use [`../appsec-program-full-circle.md`](../appsec-program-full-circle.md) for strategy and backlog.
+- Use [`../appsec-program-full-circle.md`](../appsec-program-full-circle.md) for lifecycle overview; [`implementation-master-checklist.md`](implementation-master-checklist.md) and [known gaps](../README.md#known-gaps-and-roadmap) for backlog.
 - Use phase docs as operating playbooks.
 - Use [`samm-coverage-checklist.md`](samm-coverage-checklist.md) as the maturity worksheet.
 - Use SAMM assessments to choose the next concrete improvements.

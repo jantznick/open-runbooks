@@ -10,13 +10,13 @@ This is the **documentation home** for the corporate application security (AppSe
 
 ## What this documentation covers
 
-1. **Policy and operating model** — Phases [`01`](program/01-plan-and-design.md) through [`06`](program/06-improve-and-govern.md), the [full-circle overview](appsec-program-full-circle.md), [OWASP SAMM reference](program/framework-owasp-samm.md), and rollout tracking ([implementation master checklist](program/implementation-master-checklist.md)).
+1. **Policy and operating model** — Phases [`01`](program/01-plan-and-design.md) through [`06`](program/06-improve-and-govern.md) ([shared phase structure](program/README.md)), the [full-circle overview](appsec-program-full-circle.md), [OWASP SAMM reference](program/framework-owasp-samm.md), and rollout tracking ([implementation master checklist](program/implementation-master-checklist.md)).
 2. **Normative controls** — [AppSec policy baseline](framework/appsec-policy-baseline.md), [severity and CI gates](framework/severity-policy.md), and [contextual enhancements](framework/appsec-policy-baseline-contextual-enhancements.md) where regulations or data types apply.
 3. **Evidence and automation** — [Policy ↔ evidence mapping](framework/policy-evidence-mapping.yaml) (metadata fields, job types, pass criteria for catalogs and CI integration).
 4. **Standard forms** — [Templates](templates/) (risk tier, classification, threat model, ADR, PR checklist, exceptions, release sign-off).
 5. **Reference CI controls** — Runnable scanner jobs and pipeline snippets documented under [`runbooks/appsec/`](../../runbooks/appsec/) in the program source tree; engineering **installs** the jobs Corporate Security approves per application tier (see [Using these runbooks in your own repository](#using-these-runbooks-in-your-own-repository)).
 
-Some sections describe **roadmap items** or **SHOULD** controls not yet packaged as first-class runbooks. Those are called out in [Known gaps](#known-gaps-and-roadmap) and in the [full-circle overview](appsec-program-full-circle.md).
+Some sections describe **roadmap items** or **SHOULD** controls not yet packaged as first-class runbooks. Those are called out in [Known gaps and roadmap](#known-gaps-and-roadmap).
 
 ---
 
@@ -59,7 +59,7 @@ Follow in order for initial rollout. **Corporate Security** typically leads step
 
 ### Step 1 — Understand the model
 
-1. [Full-circle program overview](appsec-program-full-circle.md) — lifecycle, tooling, gaps, SAMM positioning.
+1. [Full-circle program overview](appsec-program-full-circle.md) — how phases 01–06 connect; SAMM positioning.
 2. [OWASP SAMM reference](program/framework-owasp-samm.md) — maturity assessment versus day-to-day implementation.
 
 **Outcome:** Shared vocabulary for “full circle” AppSec and how SAMM fits the program.
@@ -126,7 +126,7 @@ Paths below are relative to the **application security program documentation** r
 | Area | Path | Contents |
 |------|------|----------|
 | **Documentation home** | `README.md` (this page) | Navigation, adoption order, CI reference |
-| **Program strategy** | `appsec-program-full-circle.md` | Outcomes, tooling summary, gap backlog |
+| **Program strategy** | `appsec-program-full-circle.md` | Lifecycle overview; links to phases 01–06 |
 | **Policy and evidence** | `framework/` | Policy baseline, severity policy, evidence mapping YAML |
 | **Lifecycle and SAMM** | `program/` | Phase guides `01`–`06`, SAMM reference, checklists |
 | **Standard forms** | `templates/` | Risk tier, classification, threat model, ADR, PR, exception, release |
@@ -197,11 +197,11 @@ Items documented but **not** necessarily shipped as first-class runbooks in the 
 
 | Gap | Why it matters | Tracked in |
 |-----|----------------|------------|
-| **IaC / K8s scanning** | Release and deploy assurance | [Full-circle overview](appsec-program-full-circle.md) |
-| **Container image scanning** (beyond filesystem SCA) | Artifact trust | Same |
-| **SBOM + provenance** | Supply chain and audit | Same + [04 Release and deploy](program/04-release-and-deploy.md) |
+| **IaC / K8s scanning** | Release and deploy assurance | [04 Release and deploy](program/04-release-and-deploy.md) |
+| **Container image scanning** (beyond filesystem SCA) | Artifact trust | [04 Release and deploy](program/04-release-and-deploy.md) |
+| **SBOM + provenance** | Supply chain and audit | [04 Release and deploy](program/04-release-and-deploy.md) |
 | **Single combined baseline pipeline** | One job graph per repo | Roadmap; compose from existing YAML |
-| **Training / champions** | SAMM governance depth | [Full-circle overview](appsec-program-full-circle.md) |
+| **Training / champions** | SAMM governance depth | [06 Improve and govern](program/06-improve-and-govern.md#adoption-paths) (scaled path) |
 | **Central findings aggregation** | Unified triage view | Platform / catalog decision |
 | **Risk-tier policy profiles** | Core vs regulated variants | Extend `framework/` when ready |
 
